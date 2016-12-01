@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120px"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:id="@+id/include">
+
+    <ImageView
+        android:layout_width="50px"
+        android:layout_height="50px"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20px"
+        android:src="@drawable/back_top_selector"
+        android:id="@+id/back_image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="登陆"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20sp"
+        android:text="注册"
+        android:textSize="15sp"
+        android:id="@+id/tv_includ"/>
+
+</com.zhy.autolayout.AutoRelativeLayout>

@@ -1,0 +1,9 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- 我的界面-->
+    <dimen name="mine_item_padding">10dp</dimen>
+    <dimen name="mine_user_center_bg">100px</dimen>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">YuNiFang</string>
+    <string name="rb_home_page">首页</string>
+    <string name="rb_catgory_page">分类</string>
+    <string name="rb_cart_page">购物车</string>
+    <string name="rb_mine_page">我的</string>
+
+
+</resources>
