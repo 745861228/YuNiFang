@@ -43,6 +43,7 @@
                 android:layout_gravity="center"
                 android:background="@mipmap/login_btn_bg"
                 android:gravity="center"
+                android:textColor="@color/YuniFangZhangHao_textColor"
                 android:text="登陆" />
 
             <RadioGroup

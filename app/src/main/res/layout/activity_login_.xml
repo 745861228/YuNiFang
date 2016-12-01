@@ -11,7 +11,7 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:background="@mipmap/bg_login"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/login_include"
         android:paddingLeft="80px"
         android:paddingRight="80px">
@@ -29,7 +29,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="御泥坊账号登陆" />
+                android:text="御泥坊账号登陆"
+                android:background="#fff"/>
 
             <TextView
                 android:id="@+id/login_phoneNumber_tv"
@@ -58,11 +59,12 @@
             android:hint="   密码" />
 
         <LinearLayout
+            android:id="@+id/login_linearlayout_getCode"
             android:layout_width="match_parent"
             android:layout_height="90px"
             android:layout_below="@id/login_phone_ed"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="invisible">
 
             <EditText
                 android:id="@+id/login_Yan_Code"
@@ -70,15 +72,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="#fff"
-                android:hint="验证码" />
+                android:hint="   验证码" />
 
             <TextView
+                android:background="@mipmap/getcode_bg"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10px"
+                android:layout_marginLeft="15px"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="213" />
+                android:text="获取验证码" />
 
         </LinearLayout>
 
@@ -117,7 +120,16 @@
         android:layout_centerHorizontal="true"
         android:drawableRight="@mipmap/ico_big_right_red"
         android:gravity="center"
-        android:text="第三方快速登陆" />
+        android:text="第三方快速登陆"
+        android:textSize="20sp"/>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/advert"
+        android:layout_above="@id/login_other_tv"
+        android:layout_marginBottom="30px"/>
 
 
 </com.zhy.autolayout.AutoRelativeLayout>

@@ -5,5 +5,7 @@
     <string name="rb_cart_page">购物车</string>
     <string name="rb_mine_page">我的</string>
 
+    <!-- 御泥坊VIP商城-->
+    <string name="home_title">御泥坊VIP商城</string>
 
 </resources>

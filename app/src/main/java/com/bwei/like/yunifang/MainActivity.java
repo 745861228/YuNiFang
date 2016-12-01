@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.RadioGroup;
 
+import com.bwei.like.yunifang.base.BaseActivity;
 import com.bwei.like.yunifang.factory.FragmentFactory;
 import com.bwei.like.yunifang.utils.CommonUtils;
 import com.bwei.like.yunifang.view.NoScrollViewPager;
 import com.bwei.like.yunifang.view.ShowingPage;
 import com.zhy.autolayout.AutoLayoutActivity;
 
-public class MainActivity extends AutoLayoutActivity {
+public class MainActivity extends BaseActivity {
 
     private NoScrollViewPager main_viewPager;
     private RadioGroup main_radioGroup;
@@ -22,7 +23,6 @@ public class MainActivity extends AutoLayoutActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.activity_main);
             initView();
 

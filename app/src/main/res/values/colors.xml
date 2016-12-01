@@ -8,4 +8,8 @@
     <!--我的页面  -->
        <color name="mineItemBgPress">#CFCFCF</color>
         <color name="colorWrite">#ffffff</color>
+    
+    <!-- 登陆页面夜色值-->
+    <color name="YuniFangZhangHao_textColor">#fc6b87</color>
+    <color name="YuniFangZhangHao_Bg">#00000000</color>
 </resources>
