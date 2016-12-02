@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.bwei.like.yunifang.application.MyApplication;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 /**
  * Created by LiKe on 2016/11/28.
@@ -118,5 +119,9 @@ public class CommonUtils {
             sharedPreferences = MyApplication.getContext().getSharedPreferences(SP_NAME, MyApplication.getContext().MODE_PRIVATE);
         }
         return sharedPreferences.getBoolean(str, false);
+    }
+
+    public static DisplayImageOptions getinitOptionsCircle(){
+        return ImageLoaderUtils.initOptionsCircle();
     }
 }

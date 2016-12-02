@@ -21,9 +21,6 @@ import java.util.ArrayList;
  */
 public class CartFragment extends BaseFragment {
 
-
-
-
     @Override
     protected View createSuccessView() {
 

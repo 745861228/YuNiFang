@@ -7,51 +7,162 @@
         android:id="@+id/home_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/home_title"
-        android:textSize="20sp"
-        android:textColor="@color/YuniFangZhangHao_textColor"
         android:layout_centerHorizontal="true"
-        android:layout_margin="15px"/>
+        android:layout_margin="15px"
+        android:text="@string/home_title"
+        android:textColor="@color/YuniFangZhangHao_textColor"
+        android:textSize="20sp" />
 
 
-        <com.liaoinstan.springview.widget.SpringView
+    <com.liaoinstan.springview.widget.SpringView
+        android:id="@+id/home_springView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_title">
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/home_title"
-            android:id="@+id/home_springView">
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!--轮播图-->
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="350px">
+
+                    <com.bwei.like.yunifang.view.MyRoolViewPager
+                        android:id="@+id/home_MyRoolViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:id="@+id/home_dots_linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="right"
+                        android:orientation="horizontal" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+
+                <!-- 多功能菜单-->
                 <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <!--轮播图-->
-                    <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_height="wrap_content">
+
+                    <GridView
+                        android:id="@+id/home_gridView"
                         android:layout_width="match_parent"
-                        android:layout_height="300px">
-                        <com.bwei.like.yunifang.view.MyRoolViewPager
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/home_MyRoolViewPager"/>
+                        android:layout_height="180px"
+                        android:numColumns="4"></GridView>
+                </com.zhy.autolayout.AutoLinearLayout>
 
-                        <com.zhy.autolayout.AutoLinearLayout
-                            android:id="@+id/home_dots_linearLayout"
-                            android:layout_width="match_parent"
-                            android:gravity="right"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:orientation="horizontal"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5px"
+                    android:background="#EEEEEE" />
 
-                        
-                    </com.zhy.autolayout.AutoRelativeLayout>
+
+                <!-- 本周热销-->
+
+                <TextView
+                    android:id="@+id/home_benWeek_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="50px"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="2131" />
+
+                <HorizontalScrollView
+                    android:id="@+id/home_MyHorizontalScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:scrollbars="none">
+
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:id="@+id/home_linear_HorizontalScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5px"
+                    android:background="#EEEEEE" />
+
+                <!--优惠活动-->
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/home_Youhui_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="50px"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="--优惠活动--" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/home_Youhui_viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </HorizontalScrollView>
 
                 </com.zhy.autolayout.AutoLinearLayout>
 
-            </ScrollView>
-        </com.liaoinstan.springview.widget.SpringView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5px"
+                    android:background="#EEEEEE" />
 
+                <!--热门专题-->
+                <TextView
+                    android:id="@+id/home_hot_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="50px"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text=" - 热门专题 -" />
+
+                <com.bwei.like.yunifang.view.Home_ListView
+                    android:id="@+id/home_homeListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5px"
+                    android:background="#EEEEEE" />
+
+                <!--最后的商品展示-->
+                <com.bwei.like.yunifang.view.Home_GridView
+                    android:id="@+id/home_defau_gridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:horizontalSpacing="10px"
+                    android:numColumns="2"
+                    android:padding="10px"
+                    android:verticalSpacing="10px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </ScrollView>
+    </com.liaoinstan.springview.widget.SpringView>
 
 
 </com.zhy.autolayout.AutoRelativeLayout>

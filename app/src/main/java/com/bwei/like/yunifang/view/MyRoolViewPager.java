@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bwei.like.yunifang.utils.CommonUtils;
 import com.bwei.like.yunifang.utils.ImageLoaderUtils;
 import com.bwei.like.yunifang.utils.LogUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -24,7 +25,6 @@ import java.util.ArrayList;
 public class MyRoolViewPager extends ViewPager {
     private ArrayList<String> imgUrlList;
     private ArrayList<ImageView> dotList;
-    private DisplayImageOptions displayImageOptions;
     private MyPagerAdapater myPagerAdapater;
     public static final int SUCCESS = 0;
 
@@ -53,7 +53,7 @@ public class MyRoolViewPager extends ViewPager {
     }
 
     private void init() {
-        displayImageOptions = ImageLoaderUtils.initOptionsCircle();
+
     }
 
     public void initData(final ArrayList<String> imgUrlList, final int[] dotArray, final ArrayList<ImageView> dotList) {
@@ -117,7 +117,7 @@ public class MyRoolViewPager extends ViewPager {
         public Object instantiateItem(ViewGroup container, final int position) {
             ImageView imageView = new ImageView(getContext());
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            ImageLoader.getInstance().displayImage(imgUrlList.get(position % imgUrlList.size()), imageView, displayImageOptions);
+            ImageLoader.getInstance().displayImage(imgUrlList.get(position % imgUrlList.size()), imageView, CommonUtils.getinitOptionsCircle());
             container.addView(imageView);
             imageView.setOnTouchListener(new OnTouchListener() {
 
