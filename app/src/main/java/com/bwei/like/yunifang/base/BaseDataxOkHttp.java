@@ -113,14 +113,13 @@ public abstract class BaseDataxOkHttp {
         final Request request = new Request.Builder()
                 .url(path+"?"+args)
                 .build();
-
         //new call
         Call call = mOkHttpClient.newCall(request);
         //请求加入调度
         call.enqueue(new com.squareup.okhttp.Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-
+                setResulttError(ShowingPage.StateType.STATE_LOAD_ERROR);
             }
 
             @Override

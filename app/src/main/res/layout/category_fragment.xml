@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--    最上面的图片布局    -->
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400px"
+                android:layout_margin="10px"
+                android:orientation="horizontal"
+                android:padding="10px">
+
+                <ImageView
+                    android:id="@+id/cateGory_classify_facial_mask"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10px"
+                    android:src="@mipmap/classify_facial_mask" />
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/cateGory_classify_emollient_water"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5px"
+                            android:layout_weight="1"
+                            android:src="@mipmap/classify_emollient_water" />
+
+                        <ImageView
+                            android:id="@+id/cateGory_classify_body_lotion"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5px"
+                            android:layout_weight="1"
+                            android:src="@mipmap/classify_body_lotion" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/cateGory_classify_facial_cleanser"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5px"
+                            android:layout_weight="1"
+                            android:src="@mipmap/classify_facial_cleanser" />
+
+                        <ImageView
+                            android:id="@+id/cateGory_classify_other"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5px"
+                            android:layout_weight="1"
+                            android:src="@mipmap/classify_other" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/cateGory_classify_kit"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_margin="5px"
+                        android:layout_weight="1"
+                        android:src="@mipmap/classify_kit" />
+                </LinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15px"
+                android:background="#EEEEEE" />
+
+            <!-- 按功效-->
+            <TextView
+                android:id="@+id/cateGory_cat_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:gravity="center"
+                android:text="- 按功效 -" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="魅力从选对产品开始" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:layout_margin="10px"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/cateGory_classify_hydrating"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@mipmap/classify_hydrating" />
+
+                <ImageView
+                    android:id="@+id/cateGory_classify_soothing"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@mipmap/classify_soothing" />
+
+                <ImageView
+                    android:id="@+id/cateGory_classify_control_oil"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@mipmap/classify_control_oil" />
+
+                <ImageView
+                    android:id="@+id/cateGory_classify_whitening"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@mipmap/classify_whitening" />
+
+                <ImageView
+                    android:id="@+id/cateGory_classify_firming"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@mipmap/classify_firming" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15px"
+                android:background="#EEEEEE" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10px"
+                android:gravity="center"
+                android:text="- 按肤质 -" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="适合自己的才是最好" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400px"
+                android:orientation="vertical">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10px"
+                        android:layout_weight="1"
+                        android:background="#DEDEB9"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="#混合性肤质%"
+                        android:textColor="#fff" />
+
+                    <RadioButton
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10px"
+                        android:layout_weight="1"
+                        android:background="#EED4C2"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="#中性肤质%"
+                        android:textColor="#fff" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10px"
+                        android:layout_weight="1"
+                        android:background="#D4D7F7"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="#混合性肤质%"
+                        android:textColor="#fff" />
+
+                    <RadioButton
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10px"
+                        android:layout_weight="1"
+                        android:background="#D1E1C3"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="#中性肤质%"
+                        android:textColor="#fff" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10px"
+                        android:layout_weight="1"
+                        android:background="#F1D2CB"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="#混合性肤质%"
+                        android:textColor="#fff" />
+
+                    <RadioButton
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10px"
+                        android:layout_weight="1"
+                        android:background="#BFF1EC"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="#中性肤质%"
+                        android:textColor="#fff" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="40px"
+                    android:src="@mipmap/classify_triangle"
+                    android:layout_centerInParent="true"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40px"
+                    android:gravity="center"
+                    android:text="- 明星产品 -" />
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+
+            <com.bwei.like.yunifang.view.Home_GridView
+                android:horizontalSpacing="10px"
+                android:verticalSpacing="10px"
+                android:padding="10px"
+                android:id="@+id/cateGory_girdView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"></com.bwei.like.yunifang.view.Home_GridView>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+
+</com.zhy.autolayout.AutoLinearLayout>

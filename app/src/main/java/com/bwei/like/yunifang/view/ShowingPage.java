@@ -168,7 +168,7 @@ public abstract class ShowingPage extends FrameLayout implements View.OnClickLis
      */
 
     public enum StateType{
-        STATE_LOAD_ERROR(3),STATE_LOAD_EMPTY(4),STATE_LOAD_SUCCESS(5);
+        STATE_LOADING(2),STATE_LOAD_ERROR(3),STATE_LOAD_EMPTY(4),STATE_LOAD_SUCCESS(5);
         private final int currentState;
 
         StateType(int currentState){

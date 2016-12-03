@@ -7,6 +7,9 @@ public class UrlUtils {
     //主页面Url
     public static final String HOME_URL = "http://m.yunifang.com/yunifang/mobile/home?";
     public static final String HOME_ARGS = "random=59676&encode=62d458fefce9c740359873cc19b05188";
+    //分类页面的url
+    public static final String CATEGORY_URL = "http://m.yunifang.com/yunifang/mobile/category/list";
+    public static final String CATEGORY_ARGS = "random=9503&encode=e181334d0cd93bf2ec95f3c9f85d1dde";
 
     /*返回数据：json串
     ad1--最上边viewPager数据  ad3--0元抽奖活动数据

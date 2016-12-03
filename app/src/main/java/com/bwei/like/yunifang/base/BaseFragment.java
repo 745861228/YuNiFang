@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bwei.like.yunifang.application.MyApplication;
+import com.bwei.like.yunifang.utils.NetUtils;
 import com.bwei.like.yunifang.view.ShowingPage;
 
 /**

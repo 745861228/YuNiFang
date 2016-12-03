@@ -24,6 +24,7 @@ import com.bwei.like.yunifang.utils.UrlUtils;
 import com.bwei.like.yunifang.view.Home_GridView;
 import com.bwei.like.yunifang.view.Home_ListView;
 import com.bwei.like.yunifang.view.MyRoolViewPager;
+import com.bwei.like.yunifang.view.RotateDownPageTransformer;
 import com.bwei.like.yunifang.view.ShowingPage;
 import com.google.gson.Gson;
 import com.liaoinstan.springview.container.DefaultHeader;
@@ -58,7 +59,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
     @Override
     protected View createSuccessView() {
-        view = CommonUtils.inflate(R.layout.homefragment_item);
+        view = CommonUtils.inflate(R.layout.home_fragment_item);
         //初始化控件
         initView();
         //轮播图
@@ -82,10 +83,15 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
     private void youHuiActivity() {
         //获取数据
         final List<HomeRoot.DataBean.ActivityInfoBean.ActivityInfoListBean> activityInfoList = homeRoot.data.activityInfo.activityInfoList;
+
+        //设置Page间间距
+        home_youhui_viewPager.setPageMargin(30);
+        //设置缓存的页面数量
+        home_youhui_viewPager.setOffscreenPageLimit(3);
         home_youhui_viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
-                return activityInfoList.size();
+                return Integer.MAX_VALUE;
             }
 
             @Override
@@ -95,11 +101,13 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                ImageView imageView = new ImageView(getActivity());
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(200,200);
-                container.addView(imageView,params);
-                ImageLoader.getInstance().displayImage(activityInfoList.get(position).activityImg,imageView,CommonUtils.getinitOptionsCircle());
-                return imageView;
+                View inflate = CommonUtils.inflate(R.layout.home_youhuiviewpager_item);
+                ImageView imageView = (ImageView) inflate.findViewById(R.id.home_youhuiViwePager_image);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setBackgroundResource(R.drawable.share_square);
+                container.addView(inflate);
+                ImageLoader.getInstance().displayImage(activityInfoList.get(position%activityInfoList.size()).activityImg,imageView,CommonUtils.getinitOptionsCircle());
+                return inflate;
             }
 
             @Override
@@ -107,6 +115,8 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                 container.removeView((View) object);
             }
         });
+
+        home_youhui_viewPager.setPageTransformer(true,new RotateDownPageTransformer());
     }
 
     /**
@@ -288,6 +298,8 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
     @Override
     protected void onLoad() {
+
+
         MyBaseData myBaseData = new MyBaseData();
         myBaseData.getData(UrlUtils.HOME_URL, UrlUtils.HOME_ARGS, 1, BaseDataxUtils.NORMALTIME);
     }

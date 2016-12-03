@@ -16,4 +16,7 @@
     <color name="YuniFangZhangHao_Bg">#00000000</color>
 
     <color name="square">#44000000</color>
+    //分类
+    <color name="cateGoryPress">#ff0000</color>
+    <color name="cateGoryNomal">#000</color>
 </resources>
