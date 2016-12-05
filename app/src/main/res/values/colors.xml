@@ -18,5 +18,18 @@
     <color name="square">#44000000</color>
     //分类
     <color name="cateGoryPress">#ff0000</color>
-    <color name="cateGoryNomal">#000</color>
+    <color name="cateGoryNomal">#fff</color>
+
+    <!-- 分类中的按肤质  -->
+    <color name="position0">#DEDEB9</color>
+    <color name="position1">#EED4C2</color>
+    <color name="position2">#D4D7F7</color>
+    <color name="position3">#D1E1C3</color>
+    <color name="position4">#F1D2CB</color>
+    <color name="position5">#BFF1EC</color>
+
+    <!--弹出提示登录框的背景-->
+    <color name="seach_color">#fff</color>
+    <color name="press">#EEEEEE</color>
+    <color name="normal">#fff</color>
 </resources>

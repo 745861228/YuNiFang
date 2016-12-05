@@ -2,21 +2,24 @@ package com.bwei.like.yunifang.activity;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.bwei.like.yunifang.MainActivity;
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.base.BaseActivity;
-import com.bwei.like.yunifang.view.MyPopupWindow;
 
 public class Login_Activity extends BaseActivity implements View.OnClickListener {
 
@@ -30,7 +33,18 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
     private Button login_but;
     private TextView login_othrt_tv;
     private LinearLayout login_LinearLayout_getCode;
-    private MyPopupWindow myPopupWindow;
+    private PopupWindow popupWindow;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    backgroundAlpha((float) msg.obj);
+                    break;
+            }
+        }
+    };
+    private TextView login_login_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +55,12 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        login_regest_tv = (TextView) findViewById(R.id.tv_includ);
+        login_regest_tv = (TextView) findViewById(R.id.include_right_tv);
+        login_regest_tv.setText("注册");
+        login_regest_tv.setVisibility(View.VISIBLE);
         login_regest_tv.setOnClickListener(this);
+        login_login_tv = (TextView) findViewById(R.id.include_meddim_tv);
+        login_login_tv.setText("登录");
         login_regest_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
         login_back_image = (ImageView) findViewById(R.id.back_image);
         login_back_image.setOnClickListener(this);
@@ -68,14 +86,14 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             //注册
-            case R.id.tv_includ:
+            case R.id.include_right_tv:
 
                 break;
 
             //返回图片
             case R.id.back_image:
                 finish();
-                overridePendingTransition(R.anim.login_in0, R.anim.login_out);
+                Login_Activity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
                 break;
 
             //御泥坊账号登陆
@@ -111,32 +129,102 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
 
             //第三方登陆
             case R.id.login_other_tv:
-                myPopupWindow = new MyPopupWindow(Login_Activity.this,itemsOnClick);
-                myPopupWindow.showAtLocation(Login_Activity.this.findViewById(R.id.login_other_tv), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+                bottomwindow(v);
+                showPopupWidow();
                 break;
 
         }
     }
 
-
-    //为弹出窗口实现监听类
-    private View.OnClickListener itemsOnClick = new View.OnClickListener(){
-
-        public void onClick(View v) {
-            myPopupWindow.dismiss();
-            switch (v.getId()) {
-                case R.id.qq_land:
-                    break;
-                case R.id.sina_land:
-                    break;
-                case R.id.wechat_land:
-                    break;
-                default:
-                    break;
+    private void showPopupWidow() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                float alpha = 1f;
+                while (alpha > 0.5f) {
+                    try {
+                        //4是根据弹出动画时间和减少的透明度计算
+                        Thread.sleep(4);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = 1;
+                    //每次减少0.01，精度越高，变暗的效果越流畅
+                    alpha -= 0.01f;
+                    msg.obj = alpha;
+                    mHandler.sendMessage(msg);
+                }
             }
 
+        }).start();
+    }
 
+    public void bottomwindow(View view) {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
         }
+        LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.pop_layout, null);
+        //设置窗口内可点击事件
+        windowClickListener(layout);
+        popupWindow = new PopupWindow(layout,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        //点击空白处时，隐藏掉pop窗口
+        popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //添加弹出、弹入的动画
+        popupWindow.setAnimationStyle(R.style.Popupwindow);
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        popupWindow.showAtLocation(view, Gravity.LEFT | Gravity.BOTTOM, 0, -location[1]);
+        //添加pop窗口关闭事件，主要是实现关闭时改变背景的透明度
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                hidePopupWindow();
+            }
+        });
+        backgroundAlpha(1f);
+    }
 
-    };
+    /**
+     * //设置窗口内可点击事件
+     * @param layout
+     */
+    private void windowClickListener(LinearLayout layout) {
+
+    }
+
+    private void hidePopupWindow() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //此处while的条件alpha不能<= 否则会出现黑屏
+                float alpha = 0.5f;
+                while (alpha < 0.9f) {
+                    try {
+                        Thread.sleep(4);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("HeadPortrait", "alpha:" + alpha);
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = 1;
+                    alpha += 0.01f;
+                    msg.obj = alpha;
+                    mHandler.sendMessage(msg);
+                }
+            }
+
+        }).start();
+    }
+
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
 }

@@ -99,7 +99,7 @@ public class ViewHolder {
      * 为ImageView设置图片
      *
      * @param viewId
-     * @param drawableId
+     * @param
      * @return
      */
     public ViewHolder setImageBitmap(int viewId, Bitmap bm) {

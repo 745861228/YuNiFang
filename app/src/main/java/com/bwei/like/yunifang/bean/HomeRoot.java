@@ -1,11 +1,14 @@
 package com.bwei.like.yunifang.bean;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by LiKe on 2016/12/1.
  */
-public class HomeRoot {
+public class HomeRoot implements Serializable{
 
 
     /**
@@ -148,7 +151,7 @@ public class HomeRoot {
             }
         }
 
-        public static class SubjectsBean {
+        public static class SubjectsBean implements Serializable{
             public String id;
             public String title;
             public String detail;
@@ -170,7 +173,7 @@ public class HomeRoot {
 
             public List<GoodsListBean> goodsList;
 
-            public static class GoodsListBean {
+            public static class GoodsListBean implements Serializable{
                 public String id;
                 public String goods_name;
                 public double shop_price;
@@ -181,7 +184,7 @@ public class HomeRoot {
             }
         }
 
-        public static class BestSellersBean {
+        public static class BestSellersBean implements Serializable{
             public String id;
             public String name;
             public String descript;
@@ -201,7 +204,7 @@ public class HomeRoot {
 
             public List<GoodsListBean> goodsList;
 
-            public static class GoodsListBean {
+            public static class GoodsListBean implements Serializable{
                 public String id;
                 public String goods_name;
                 public double shop_price;
@@ -212,7 +215,7 @@ public class HomeRoot {
             }
         }
 
-        public static class Ad1Bean {
+        public static class Ad1Bean implements Serializable{
             public String id;
             public String image;
             public int ad_type;
@@ -229,7 +232,7 @@ public class HomeRoot {
             public String channelType;
         }
 
-        public static class Ad5Bean {
+        public static class Ad5Bean implements Serializable{
             public String id;
             public String image;
             public int ad_type;
@@ -243,7 +246,7 @@ public class HomeRoot {
             public String title;
         }
 
-        public static class DefaultGoodsListBean {
+        public static class DefaultGoodsListBean implements Serializable{
             public String id;
             public String goods_name;
             public double shop_price;

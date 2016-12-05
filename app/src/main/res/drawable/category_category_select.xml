@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item android:color="#3197FF" android:state_selected="true" />-->
+    <!--<item android:drawable="@color/cateGoryNomal" android:state_selected="false"></item>-->
+    <!--<item android:color="@color/cateGoryPress" android:state_focused="true" android:state_pressed="true" />-->
+    <!--<item android:color="@color/cateGoryNomal" /> &lt;!&ndash; default &ndash;&gt;-->
+
+    <item android:color="#FF0000" android:state_pressed="true" /> <!-- pressed -->
+    <item android:color="#FFFFFF" android:state_focused="true" /> <!-- focused -->
+    <item android:color="#FFFFFF" /> <!-- default -->
+</selector>

@@ -29,7 +29,9 @@
         <activity android:name=".navigation.Logo2Activity" />
         <activity android:name=".navigation.NavigationActivity" />
         <activity android:name=".activity.Login_Activity" />
-        <activity android:name=".base.BaseActivity"></activity>
+        <activity android:name=".base.BaseActivity" />
+        <activity android:name=".activity.Ad5WebViewActivity" />
+        <activity android:name=".activity.Home_MoreActivity"></activity>
     </application>
 
 </manifest>

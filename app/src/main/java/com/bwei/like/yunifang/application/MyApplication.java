@@ -19,6 +19,8 @@ public class MyApplication extends Application {
     private static Handler handler;
     private static int mainThreadId;
 
+    public static boolean loginFlag = false;
+
     @Override
     public void onCreate() {
         super.onCreate();

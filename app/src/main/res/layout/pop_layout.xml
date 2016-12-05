@@ -30,30 +30,30 @@
         android:background="#fff"
         android:orientation="horizontal"
         android:layout_marginTop="25dp"
-        >
-        <RadioButton
+        android:layout_marginBottom="25dp">
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/qqbutton_selector"
+            android:src="@drawable/qqbutton_selector"
             android:id="@+id/qq_land"
-            android:button="@null"/>
+            android:background="#fff"/>
 
-        <RadioButton
-            android:button="@null"
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/sinabutton_selector"
-            android:id="@+id/sina_land" />
+            android:src="@drawable/sinabutton_selector"
+            android:id="@+id/sina_land"
+            android:background="#fff"/>
 
-        <RadioButton
-            android:button="@null"
+        <ImageButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/wechatbutton_selector"
-            android:id="@+id/wechat_land" />
+            android:src="@drawable/wechatbutton_selector"
+            android:id="@+id/wechat_land"
+            android:background="#fff"/>
 
     </RadioGroup>
 

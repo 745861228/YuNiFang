@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10px">
+
+    <ImageView
+        android:id="@+id/goods_img"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_margin="10px"
+        android:padding="2px"
+        android:background="@drawable/share_square"
+        android:src="@mipmap/classify_triangle" />
+
+    <TextView
+        android:id="@+id/goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10px"
+        android:layout_toRightOf="@id/goods_img"
+        android:text="21313" />
+
+    <TextView
+        android:id="@+id/market_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/goods_img"
+        android:layout_margin="10px"
+        android:layout_toRightOf="@id/goods_img"
+        android:text="2313" />
+
+    <TextView
+        android:id="@+id/shop_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/market_price"
+        android:layout_margin="10px"
+        android:layout_toRightOf="@id/goods_img"
+        android:text="3424"
+        android:textColor="@color/YuniFangZhangHao_textColor"/>
+
+
+    <ImageView
+        android:id="@+id/order_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20px"
+        android:src="@mipmap/share_normal" />
+
+    <TextView
+        android:id="@+id/order_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20px"
+        android:text="4323213"
+        android:visibility="gone" />
+
+</com.zhy.autolayout.AutoRelativeLayout>

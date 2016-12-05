@@ -1,21 +1,36 @@
 package com.bwei.like.yunifang.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bwei.like.yunifang.R;
+import com.bwei.like.yunifang.activity.Ad5WebViewActivity;
+import com.bwei.like.yunifang.activity.Home_MoreActivity;
+import com.bwei.like.yunifang.activity.Login_Activity;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
+import com.bwei.like.yunifang.application.MyApplication;
 import com.bwei.like.yunifang.base.BaseDataxUtils;
 import com.bwei.like.yunifang.base.BaseFragment;
 import com.bwei.like.yunifang.bean.HomeRoot;
@@ -32,6 +47,7 @@ import com.liaoinstan.springview.widget.SpringView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoLinearLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +72,17 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
     private Home_ListView home_homeListView;
     private Home_GridView home_defaule_gridView;
     private ViewPager home_youhui_viewPager;
+    private PopupWindow popupWindow;
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    backgroundAlpha((float) msg.obj);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected View createSuccessView() {
@@ -85,7 +112,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         final List<HomeRoot.DataBean.ActivityInfoBean.ActivityInfoListBean> activityInfoList = homeRoot.data.activityInfo.activityInfoList;
 
         //设置Page间间距
-        home_youhui_viewPager.setPageMargin(30);
+        home_youhui_viewPager.setPageMargin(10);
         //设置缓存的页面数量
         home_youhui_viewPager.setOffscreenPageLimit(3);
         home_youhui_viewPager.setAdapter(new PagerAdapter() {
@@ -106,7 +133,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setBackgroundResource(R.drawable.share_square);
                 container.addView(inflate);
-                ImageLoader.getInstance().displayImage(activityInfoList.get(position%activityInfoList.size()).activityImg,imageView,CommonUtils.getinitOptionsCircle());
+                ImageLoader.getInstance().displayImage(activityInfoList.get(position % activityInfoList.size()).activityImg, imageView, CommonUtils.getinitOptionsCircle());
                 return inflate;
             }
 
@@ -116,7 +143,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
             }
         });
 
-        home_youhui_viewPager.setPageTransformer(true,new RotateDownPageTransformer());
+        home_youhui_viewPager.setPageTransformer(true, new RotateDownPageTransformer());
     }
 
     /**
@@ -141,10 +168,11 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
      * 热门专题
      */
     private void hotSubject() {
-        List<HomeRoot.DataBean.SubjectsBean> subjects = homeRoot.data.subjects;
+        final List<HomeRoot.DataBean.SubjectsBean> subjects = homeRoot.data.subjects;
         home_homeListView.setAdapter(new CommonAdapter<HomeRoot.DataBean.SubjectsBean>(getActivity(), subjects, R.layout.home_home_listview_item) {
             @Override
             public void convert(ViewHolder viewHolder, HomeRoot.DataBean.SubjectsBean item) {
+                int position = viewHolder.getPosition();
                 ImageView home_hot_LargeImage = viewHolder.getView(R.id.home_hot_LargeImage);
                 home_hot_LargeImage.setScaleType(ImageView.ScaleType.FIT_XY);
                 viewHolder.setImageByUrl(R.id.home_hot_LargeImage, item.image);
@@ -157,8 +185,8 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                     ImageView home_gallery_image = (ImageView) inflate.findViewById(R.id.home_gallery_image);
                     TextView shop_price = (TextView) inflate.findViewById(R.id.shop_price);
                     TextView market_price = (TextView) inflate.findViewById(R.id.market_price);
-                    shop_price.setText("￥"+goodsList.get(i).shop_price);
-                    market_price.setText(goodsList.get(i).market_price+"");
+                    shop_price.setText("￥" + goodsList.get(i).shop_price);
+                    market_price.setText(goodsList.get(i).market_price + "");
                     home_gallery_name.setText(goodsList.get(i).goods_name);
                     shop_price.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
                     ImageLoader.getInstance().displayImage(goodsList.get(i).goods_img, home_gallery_image, CommonUtils.getinitOptionsCircle());
@@ -166,9 +194,30 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                     params.setMargins(5, 5, 5, 5);
                     home_hot_linearLayout.addView(inflate, params);
                 }
+                //监听大图跳转界面
+                setHotMoreOnClickListener(home_hot_LargeImage,subjects.get(position));
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setImageResource(R.mipmap.home_more);
                 home_hot_linearLayout.addView(imageView);
+                setHotMoreOnClickListener(imageView,subjects.get(position));
+            }
+        });
+    }
+
+    /**
+     * //监听大图跳转界面
+     * 展示更多数据
+     * @param
+     * @param
+     * @param subjectsBean
+     */
+    private void setHotMoreOnClickListener(ImageView imageView, final HomeRoot.DataBean.SubjectsBean subjectsBean) {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Home_MoreActivity.class);
+                intent.putExtra("subjectsBean",  subjectsBean);
+                startActivity(intent);
             }
         });
     }
@@ -178,7 +227,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
      */
     private void currentWeek() {
         LinearLayout.LayoutParams params;
-        List<HomeRoot.DataBean.BestSellersBean> bestSellers = homeRoot.data.bestSellers;
+        final List<HomeRoot.DataBean.BestSellersBean> bestSellers = homeRoot.data.bestSellers;
         home_benWeek_tv.setText("~~" + bestSellers.get(0).name + "~~");
         home_benWeek_tv.setTextColor(Color.BLACK);
         home_Week_linearLayout.removeAllViews();
@@ -188,9 +237,8 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
             ImageView home_gallery_image = (ImageView) inflate.findViewById(R.id.home_gallery_image);
             TextView shop_price = (TextView) inflate.findViewById(R.id.shop_price);
             TextView market_price = (TextView) inflate.findViewById(R.id.market_price);
-
-            shop_price.setText("￥"+bestSellers.get(0).goodsList.get(i).shop_price);
-            market_price.setText(bestSellers.get(0).goodsList.get(i).market_price+"");
+            shop_price.setText("￥" + bestSellers.get(0).goodsList.get(i).shop_price);
+            market_price.setText(bestSellers.get(0).goodsList.get(i).market_price + "");
             shop_price.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
             params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             home_gallery_name.setText(bestSellers.get(0).goodsList.get(i).goods_name);
@@ -201,6 +249,16 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         ImageView imageView = new ImageView(getActivity());
         imageView.setImageResource(R.mipmap.home_more);
         home_Week_linearLayout.addView(imageView);
+
+        //更多监听事件
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Home_MoreActivity.class);
+                intent.putExtra("bestSellers", (Serializable) homeRoot.data.bestSellers);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -215,6 +273,43 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
             public void convert(ViewHolder viewHolder, HomeRoot.DataBean.Ad5Bean item) {
                 viewHolder.setText(R.id.home_function_tv, item.title);
                 viewHolder.setImageByUrl(R.id.home_function_image, item.image);
+            }
+        });
+
+        //监听事件
+        home_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    //每日签到
+                    case 0:
+                        if (MyApplication.loginFlag) {
+
+                        } else {
+                            bottomwindow(view);
+                            showPopupWidow();
+                        }
+                        break;
+
+                    //积分商城
+                    case 1:
+                        Intent intent = new Intent(getActivity(), Ad5WebViewActivity.class);
+                        intent.putExtra("ad5",homeRoot.data.ad5.get(position));
+                        getActivity().startActivity(intent);
+                        break;
+
+                    //兑换专区
+                    case 2:
+
+                        break;
+
+                    //真伪查询
+                    case 3:
+                        Intent intent3 = new Intent(getActivity(), Ad5WebViewActivity.class);
+                        intent3.putExtra("ad5",homeRoot.data.ad5.get(position));
+                        getActivity().startActivity(intent3);
+                        break;
+                }
             }
         });
     }
@@ -281,7 +376,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         home_gridView = (GridView) view.findViewById(R.id.home_gridView);
 
         //优惠活动
-        home_youhui_viewPager = (ViewPager)view.findViewById(R.id.home_Youhui_viewPager);
+        home_youhui_viewPager = (ViewPager) view.findViewById(R.id.home_Youhui_viewPager);
 
         //本周热销
         my_HomeHorizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.home_MyHorizontalScrollView);
@@ -341,4 +436,134 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
     public void lode() {
         home_springView.scrollTo(0, 0);
     }
+
+    /**
+     * 点击每日签到弹出popupwindow
+     */
+
+    public void bottomwindow(View view) {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            return;
+        }
+        View layout = CommonUtils.inflate(R.layout.home_popupwindow_item);
+        Button back_button = (Button) layout.findViewById(R.id.back_button);
+        Button goto_Login_button = (Button) layout.findViewById(R.id.goto_Login_button);
+        popupWindow = new PopupWindow(layout,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        //点击空白处时，隐藏掉pop窗口
+//        popupWindow.setOutsideTouchable(false);
+        popupWindow.setFocusable(true);
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //添加弹出、弹入的动画
+        popupWindow.setAnimationStyle(R.style.Popupwindow);
+        int[] location = new int[2];
+
+        view.getLocationOnScreen(location);
+        popupWindow.showAtLocation(view, Gravity.CENTER | Gravity.CENTER, 0, 0);
+        //添加pop窗口关闭事件，主要是实现关闭时改变背景的透明度
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                hidePopupWindow();
+            }
+        });
+        backgroundAlpha(1f);
+
+        /**
+         * 按钮点击事件
+         */
+        back_buttonAndGotoLogin(back_button,goto_Login_button);
+    }
+
+    /**
+     * 两个按钮点击事件
+     * @param back_button
+     * @param goto_Login_button
+     */
+    private void back_buttonAndGotoLogin(Button back_button, Button goto_Login_button) {
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        //
+        goto_Login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                getActivity().startActivity(new Intent(getActivity(), Login_Activity.class));
+            }
+        });
+    }
+
+    /**
+     * popupwindow动画
+     * @param
+     */
+    private void showPopupWidow() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                float alpha = 1f;
+                while (alpha > 0.5f) {
+                    try {
+                        //4是根据弹出动画时间和减少的透明度计算
+                        Thread.sleep(4);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = 1;
+                    //每次减少0.01，精度越高，变暗的效果越流畅
+                    alpha -= 0.01f;
+                    msg.obj = alpha;
+                    mHandler.sendMessage(msg);
+                }
+            }
+
+        }).start();
+    }
+
+    /**
+     * popupwindow
+     * @param
+     */
+    private void hidePopupWindow() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //此处while的条件alpha不能<= 否则会出现黑屏
+                float alpha = 0.5f;
+                while (alpha < 0.9f) {
+                    try {
+                        Thread.sleep(4);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("HeadPortrait", "alpha:" + alpha);
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = 1;
+                    alpha += 0.01f;
+                    msg.obj = alpha;
+                    mHandler.sendMessage(msg);
+                }
+            }
+
+        }).start();
+    }
+
+    /**
+     * popupwindow动画
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getActivity().getWindow().setAttributes(lp);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+    }
+
 }
