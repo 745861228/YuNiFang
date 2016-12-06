@@ -62,16 +62,16 @@ public class CategoryFragment extends BaseFragment {
      * 按肤质
      */
     private void initCateGoryGrid() {
-        final int[] colorArray = new int[]{R.color.position0,R.color.position1,R.color.position2,R.color.position3,R.color.position4,R.color.position5};
+        final int[] colorArray = new int[]{R.color.position0, R.color.position1, R.color.position2, R.color.position3, R.color.position4, R.color.position5};
         //获取数据
         final List<CategoryRoot.DataBean.CategoryBean.ChildrenBean> children = categoryRoot.data.category.get(2).children;
-        cateGory_gridView_fuzhi.setAdapter(new CommonAdapter<CategoryRoot.DataBean.CategoryBean.ChildrenBean>(getActivity(),children,R.layout.category_gridview_fuzhi_item) {
+        cateGory_gridView_fuzhi.setAdapter(new CommonAdapter<CategoryRoot.DataBean.CategoryBean.ChildrenBean>(getActivity(), children, R.layout.category_gridview_fuzhi_item) {
             @Override
             public void convert(ViewHolder helper, CategoryRoot.DataBean.CategoryBean.ChildrenBean item) {
                 int position = helper.getPosition();
                 View convertView = helper.getConvertView();
                 convertView.setBackgroundResource(colorArray[position]);
-                helper.setText(R.id.cateGory_fuzhi_cat_name,"#"+item.cat_name+"#");
+                helper.setText(R.id.cateGory_fuzhi_cat_name, "#" + item.cat_name + "#");
             }
         });
     }
@@ -80,14 +80,14 @@ public class CategoryFragment extends BaseFragment {
      * 按功效
      */
     private void initChildDrem() {
-        int[] picArray = new int[]{R.mipmap.classify_hydrating,R.mipmap.classify_soothing,R.mipmap.classify_control_oil,R.mipmap.classify_whitening,R.mipmap.classify_firming};
+        int[] picArray = new int[]{R.mipmap.classify_hydrating, R.mipmap.classify_soothing, R.mipmap.classify_control_oil, R.mipmap.classify_whitening, R.mipmap.classify_firming};
         CategoryRoot.DataBean.CategoryBean categoryBean = categoryRoot.data.category.get(0);
-        cateGory_cat_name_gonfxiao_tv.setText("- "+categoryBean.cat_name+" -");
+        cateGory_cat_name_gonfxiao_tv.setText("- " + categoryBean.cat_name + " -");
         for (int i = 0; i < categoryBean.children.size(); i++) {
             ImageView imageView = new ImageView(getActivity());
             imageView.setImageResource(picArray[i]);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,1.0f);
-            cateGory_childDrem.addView(imageView,params);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
+            cateGory_childDrem.addView(imageView, params);
         }
     }
 
@@ -101,14 +101,14 @@ public class CategoryFragment extends BaseFragment {
         for (int i = 0; i < 10; i++) {
             goodsBriefBeanArrayList.add(goodsBrief.get(i));
         }
-        cateGory_girdView_last.setAdapter(new CommonAdapter<CategoryRoot.DataBean.GoodsBriefBean>(getActivity(),goodsBriefBeanArrayList,R.layout.home_home_gridview_item) {
+        cateGory_girdView_last.setAdapter(new CommonAdapter<CategoryRoot.DataBean.GoodsBriefBean>(getActivity(), goodsBriefBeanArrayList, R.layout.home_home_gridview_item) {
             @Override
             public void convert(ViewHolder helper, CategoryRoot.DataBean.GoodsBriefBean item) {
-                    helper.setImageByUrl(R.id.home_default_gridView_image, item.goods_img);
-                    helper.setText(R.id.efficacy, item.efficacy);
-                    helper.setText(R.id.goods_name, item.goods_name);
-                    helper.setText(R.id.shop_price, "￥" + item.shop_price);
-                    helper.setText(R.id.market_price, "￥" + item.market_price);
+                helper.setImageByUrl(R.id.home_default_gridView_image, item.goods_img);
+                helper.setText(R.id.efficacy, item.efficacy);
+                helper.setText(R.id.goods_name, item.goods_name);
+                helper.setText(R.id.shop_price, "￥" + item.shop_price);
+                helper.setText(R.id.market_price, "￥" + item.market_price);
             }
         });
     }
@@ -133,7 +133,7 @@ public class CategoryFragment extends BaseFragment {
 
         //按功效
         cateGory_childDrem = (AutoLinearLayout) inflate.findViewById(R.id.cateGory_childDrem);
-        cateGory_cat_name_gonfxiao_tv = (TextView)inflate.findViewById(R.id.cateGory_cat_name_gonfxiao_tv);
+        cateGory_cat_name_gonfxiao_tv = (TextView) inflate.findViewById(R.id.cateGory_cat_name_gonfxiao_tv);
 
 
         //按肤质
@@ -155,11 +155,13 @@ public class CategoryFragment extends BaseFragment {
 
         @Override
         public void setResultData(String resultData) {
-            CategoryFragment.this.showingPage(ShowingPage.StateType.STATE_LOAD_SUCCESS);
             CategoryFragment.this.data = resultData;
             //解析
             Gson gson = new Gson();
             categoryRoot = gson.fromJson(data, CategoryRoot.class);
+            if (categoryRoot != null && categoryRoot.data != null) {
+                CategoryFragment.this.showingPage(ShowingPage.StateType.STATE_LOAD_SUCCESS);
+            }
         }
     }
 }

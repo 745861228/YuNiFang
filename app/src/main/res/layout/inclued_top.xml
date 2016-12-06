@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/include"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fff"
-    android:orientation="vertical"
-    android:id="@+id/include">
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_width="50px"
-        android:layout_height="50px"
+        android:id="@+id/back_image"
+        android:layout_width="40px"
+        android:layout_height="40px"
         android:layout_centerVertical="true"
         android:layout_margin="20px"
-        android:src="@drawable/back_top_selector"
-        android:id="@+id/back_image"/>
+        android:src="@drawable/back_top_selector" />
 
     <TextView
+        android:id="@+id/include_meddim_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_margin="30px"
         android:text="登陆"
-        android:textSize="20sp"
-        android:id="@+id/include_meddim_tv"/>
+        android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/include_right_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="25px"
         android:textSize="15sp"
-        android:id="@+id/include_right_tv"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/include_share_image"
+        android:layout_width="40px"
+        android:layout_height="40px"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="25px"
         android:visibility="gone"
-        android:id="@+id/include_image"/>
+        android:layout_marginRight="25px"
+        android:background="@drawable/shear_selector" />
+
+
+    <ImageView
+        android:id="@+id/include_image_goods_shopping_cart"
+        android:layout_width="40px"
+        android:layout_height="40px"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="100px"
+        android:src="@mipmap/goods_shopping_cart"
+        android:visibility="gone"/>
+
 
 </com.zhy.autolayout.AutoRelativeLayout>

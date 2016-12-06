@@ -55,11 +55,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <GridView
+                    <com.bwei.like.yunifang.view.Home_GridView
                         android:id="@+id/home_gridView"
                         android:layout_width="match_parent"
-                        android:layout_height="180px"
-                        android:numColumns="4"></GridView>
+                        android:layout_height="wrap_content"
+                        android:numColumns="4"></com.bwei.like.yunifang.view.Home_GridView>
                 </com.zhy.autolayout.AutoLinearLayout>
 
                 <View
@@ -175,7 +175,8 @@
                     android:background="#EEEEEE"
                     android:gravity="center"
                     android:padding="20px"
-                    android:text="查看所有商品" />
+                    android:text="查看所有商品"
+                    android:id="@+id/selectAll_goods"/>
             </com.zhy.autolayout.AutoLinearLayout>
 
         </ScrollView>

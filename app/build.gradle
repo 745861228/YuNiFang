@@ -28,4 +28,17 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.zhy:autolayout:1.4.5'
     compile project(':SpringView')
+    //    compile 'com.github.githubwing:ByeBurger:1.2.3'
+    //    compile 'com.android.support:design:23.0.0'
+    compile project(':HamburgerLibrary')
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
 }
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+

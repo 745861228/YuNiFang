@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/HamburgerLibrary/HamburgerLibrary.iml" filepath="$PROJECT_DIR$/HamburgerLibrary/HamburgerLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpringView/SpringView.iml" filepath="$PROJECT_DIR$/SpringView/SpringView.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpringViewlibrary/SpringViewlibrary.iml" filepath="$PROJECT_DIR$/SpringViewlibrary/SpringViewlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/YuNiFang.iml" filepath="$PROJECT_DIR$/YuNiFang.iml" />

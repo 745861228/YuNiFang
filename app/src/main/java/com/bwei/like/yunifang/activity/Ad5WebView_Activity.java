@@ -1,6 +1,6 @@
 package com.bwei.like.yunifang.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +8,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.base.BaseActivity;
 import com.bwei.like.yunifang.bean.HomeRoot;
 
-public class Ad5WebViewActivity extends BaseActivity implements View.OnClickListener {
+public class Ad5WebView_Activity extends BaseActivity implements View.OnClickListener {
 
     private ImageView include_image;
     private WebView ad5_webView;
@@ -26,19 +25,42 @@ public class Ad5WebViewActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad5_web_view);
-        ad5 = (HomeRoot.DataBean.Ad5Bean) getIntent().getSerializableExtra("ad5");
         initView();
+
+        Intent intent = getIntent();
+        //获取任务栏下的数据（每日签到，积分商城，兑换专区，真伪查询）
+        ad5 = (HomeRoot.DataBean.Ad5Bean) intent.getSerializableExtra("ad5");
+
+        //获取轮播图下的数据
+        HomeRoot.DataBean.Ad1Bean ad1Bean = (HomeRoot.DataBean.Ad1Bean) intent.getSerializableExtra("adl");
+
+        //获取优惠活动数据
+        HomeRoot.DataBean.ActivityInfoBean.ActivityInfoListBean activityInfoListBean = (HomeRoot.DataBean.ActivityInfoBean.ActivityInfoListBean) intent.getSerializableExtra("activityInfoListBean");
+
+        if (ad5!=null){
+            include_middle_tv.setText(ad5.title);
+            ad5_webView.loadUrl(ad5.ad_type_dynamic_data);
+        }else if (ad1Bean!=null){
+            include_middle_tv.setText("御泥坊商城");
+            ad5_webView.loadUrl(ad1Bean.ad_type_dynamic_data);
+
+            //优惠活动展示数据
+        }else if (activityInfoListBean!=null){
+            include_middle_tv.setText("御泥坊商城");
+
+        }
+
         //获取数据
-        ad5_webView.loadUrl(ad5.ad_type_dynamic_data);
+
         ad5_webView.setWebViewClient(new WebViewClient());
     }
 
+
     private void initView() {
         include_middle_tv = (TextView) findViewById(R.id.include_meddim_tv);
-        include_middle_tv.setText(ad5.title);
         ImageView back_image = (ImageView)findViewById(R.id.back_image);
         back_image.setOnClickListener(this);
-        include_image = (ImageView) findViewById(R.id.include_image);
+        include_image = (ImageView) findViewById(R.id.include_share_image);
         include_image.setVisibility(View.VISIBLE);
         ViewGroup.LayoutParams params = include_image.getLayoutParams();
         params.height = 30;
@@ -70,10 +92,10 @@ public class Ad5WebViewActivity extends BaseActivity implements View.OnClickList
             //返回按钮
             case R.id.back_image:
                 finish();
-                Ad5WebViewActivity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
+                Ad5WebView_Activity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
                 break;
             //分享图片按钮监听
-            case R.id.include_image:
+            case R.id.include_share_image:
 
                 break;
         }

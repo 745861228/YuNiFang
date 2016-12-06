@@ -1,1 +1,1 @@
-include ':app', 'SpringViewlibrary', 'SpringView'
+include ':app', 'SpringViewlibrary', 'SpringView', 'HamburgerLibrary'

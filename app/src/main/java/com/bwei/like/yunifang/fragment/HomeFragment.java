@@ -2,11 +2,9 @@ package com.bwei.like.yunifang.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -25,9 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bwei.like.yunifang.R;
-import com.bwei.like.yunifang.activity.Ad5WebViewActivity;
+import com.bwei.like.yunifang.activity.Ad5WebView_Activity;
 import com.bwei.like.yunifang.activity.Home_MoreActivity;
 import com.bwei.like.yunifang.activity.Login_Activity;
+import com.bwei.like.yunifang.activity.Particulars_Activity;
+import com.bwei.like.yunifang.activity.SelectAllActivity;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
 import com.bwei.like.yunifang.application.MyApplication;
@@ -54,7 +54,7 @@ import java.util.List;
 /**
  * Created by LiKe on 2016/11/28.
  */
-public class HomeFragment extends BaseFragment implements SpringView.OnFreshListener {
+public class HomeFragment extends BaseFragment implements SpringView.OnFreshListener ,View.OnClickListener{
 
     private String data;
     private View view;
@@ -65,7 +65,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
     ArrayList<String> imgUrlList = new ArrayList<>();
     ArrayList<ImageView> dotList = new ArrayList<>();
     private HomeRoot homeRoot;
-    private GridView home_gridView;
+    private Home_GridView home_gridView;
     private HorizontalScrollView my_HomeHorizontalScrollView;
     private TextView home_benWeek_tv;
     private AutoLinearLayout home_Week_linearLayout;
@@ -83,6 +83,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
             }
         }
     };
+    private TextView selectAll_goods;
 
     @Override
     protected View createSuccessView() {
@@ -96,7 +97,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         //优惠活动
         youHuiActivity();
         //本周热销
-        currentWeek();
+       // currentWeek();
         //热门专题
         hotSubject();
         //默认商品展示
@@ -127,13 +128,21 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
             }
 
             @Override
-            public Object instantiateItem(ViewGroup container, int position) {
+            public Object instantiateItem(ViewGroup container, final int position) {
                 View inflate = CommonUtils.inflate(R.layout.home_youhuiviewpager_item);
                 ImageView imageView = (ImageView) inflate.findViewById(R.id.home_youhuiViwePager_image);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setBackgroundResource(R.drawable.share_square);
                 container.addView(inflate);
                 ImageLoader.getInstance().displayImage(activityInfoList.get(position % activityInfoList.size()).activityImg, imageView, CommonUtils.getinitOptionsCircle());
+
+                //优惠活动监听事件跳转事件
+                inflate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       // intentJump("activityInfoListBean",activityInfoList.get(position % activityInfoList.size()));
+                    }
+                });
                 return inflate;
             }
 
@@ -193,13 +202,16 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.setMargins(5, 5, 5, 5);
                     home_hot_linearLayout.addView(inflate, params);
+
+                    //跳转商品详情页
+                    setHotMoreOnClickListener(inflate,goodsList.get(i),"goodsListBean", Particulars_Activity.class);
                 }
                 //监听大图跳转界面
-                setHotMoreOnClickListener(home_hot_LargeImage,subjects.get(position));
+                setHotMoreOnClickListener(home_hot_LargeImage,subjects.get(position),"subjectsBean",Home_MoreActivity.class);
                 ImageView imageView = new ImageView(getActivity());
                 imageView.setImageResource(R.mipmap.home_more);
                 home_hot_linearLayout.addView(imageView);
-                setHotMoreOnClickListener(imageView,subjects.get(position));
+                setHotMoreOnClickListener(imageView,subjects.get(position),"subjectsBean",Home_MoreActivity.class);
             }
         });
     }
@@ -209,14 +221,14 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
      * 展示更多数据
      * @param
      * @param
-     * @param subjectsBean
+     * @param
      */
-    private void setHotMoreOnClickListener(ImageView imageView, final HomeRoot.DataBean.SubjectsBean subjectsBean) {
+    private void setHotMoreOnClickListener(View imageView, final Object o, final String str, final Class c) {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Home_MoreActivity.class);
-                intent.putExtra("subjectsBean",  subjectsBean);
+                Intent intent = new Intent(getActivity(), c);
+                intent.putExtra(str, (Serializable) o);
                 startActivity(intent);
             }
         });
@@ -225,41 +237,49 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
     /**
      * 本周热销
      */
-    private void currentWeek() {
-        LinearLayout.LayoutParams params;
-        final List<HomeRoot.DataBean.BestSellersBean> bestSellers = homeRoot.data.bestSellers;
-        home_benWeek_tv.setText("~~" + bestSellers.get(0).name + "~~");
-        home_benWeek_tv.setTextColor(Color.BLACK);
-        home_Week_linearLayout.removeAllViews();
-        for (int i = 0; i < 7; i++) {
-            View inflate = CommonUtils.inflate(R.layout.home_gallery_item);
-            TextView home_gallery_name = (TextView) inflate.findViewById(R.id.home_gallery_name);
-            ImageView home_gallery_image = (ImageView) inflate.findViewById(R.id.home_gallery_image);
-            TextView shop_price = (TextView) inflate.findViewById(R.id.shop_price);
-            TextView market_price = (TextView) inflate.findViewById(R.id.market_price);
-            shop_price.setText("￥" + bestSellers.get(0).goodsList.get(i).shop_price);
-            market_price.setText(bestSellers.get(0).goodsList.get(i).market_price + "");
-            shop_price.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
-            params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            home_gallery_name.setText(bestSellers.get(0).goodsList.get(i).goods_name);
-            ImageLoader.getInstance().displayImage(bestSellers.get(0).goodsList.get(i).goods_img, home_gallery_image, CommonUtils.getinitOptionsCircle());
-            params.setMargins(5, 5, 5, 5);
-            home_Week_linearLayout.addView(inflate, params);
-        }
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setImageResource(R.mipmap.home_more);
-        home_Week_linearLayout.addView(imageView);
-
-        //更多监听事件
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Home_MoreActivity.class);
-                intent.putExtra("bestSellers", (Serializable) homeRoot.data.bestSellers);
-                startActivity(intent);
-            }
-        });
-    }
+//    private void currentWeek() {
+//        LinearLayout.LayoutParams params;
+//        final List<HomeRoot.DataBean.BestSellersBean> bestSellers = homeRoot.data.bestSellers;
+//        home_benWeek_tv.setText("~~" + bestSellers.get(0).name + "~~");
+//        home_benWeek_tv.setTextColor(Color.BLACK);
+//        home_Week_linearLayout.removeAllViews();
+//        for (int i = 0; i < 7; i++) {
+//            View inflate = CommonUtils.inflate(R.layout.home_gallery_item);
+//            TextView home_gallery_name = (TextView) inflate.findViewById(R.id.home_gallery_name);
+//            ImageView home_gallery_image = (ImageView) inflate.findViewById(R.id.home_gallery_image);
+//            TextView shop_price = (TextView) inflate.findViewById(R.id.shop_price);
+//            TextView market_price = (TextView) inflate.findViewById(R.id.market_price);
+//            shop_price.setText("￥" + bestSellers.get(0).goodsList.get(i).shop_price);
+//            market_price.setText(bestSellers.get(0).goodsList.get(i).market_price + "");
+//            shop_price.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
+//            params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            home_gallery_name.setText(bestSellers.get(0).goodsList.get(i).goods_name);
+//            ImageLoader.getInstance().displayImage(bestSellers.get(0).goodsList.get(i).goods_img, home_gallery_image, CommonUtils.getinitOptionsCircle());
+//            params.setMargins(5, 5, 5, 5);
+//            home_Week_linearLayout.addView(inflate, params);
+//
+//            //点击商品跳转详情界面
+//            inflate.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
+//        }
+//        ImageView imageView = new ImageView(getActivity());
+//        imageView.setImageResource(R.mipmap.home_more);
+//        home_Week_linearLayout.addView(imageView);
+//
+//        //更多监听事件
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), Home_MoreActivity.class);
+//                intent.putExtra("bestSellers", (Serializable) homeRoot.data.bestSellers);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
 
     /**
@@ -293,21 +313,38 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
                     //积分商城
                     case 1:
-                        Intent intent = new Intent(getActivity(), Ad5WebViewActivity.class);
-                        intent.putExtra("ad5",homeRoot.data.ad5.get(position));
-                        getActivity().startActivity(intent);
+                        intentJump("ad5",homeRoot.data.ad5.get(position));
                         break;
 
                     //兑换专区
                     case 2:
-
+                        if (MyApplication.loginFlag) {
+                            intentJump("ad5",homeRoot.data.ad5.get(position));
+                        } else {
+                            bottomwindow(view);
+                            showPopupWidow();
+                        }
                         break;
 
                     //真伪查询
                     case 3:
-                        Intent intent3 = new Intent(getActivity(), Ad5WebViewActivity.class);
-                        intent3.putExtra("ad5",homeRoot.data.ad5.get(position));
-                        getActivity().startActivity(intent3);
+                        intentJump("ad5",homeRoot.data.ad5.get(position));
+                        break;
+
+                    case 4:
+                        intentJump("ad5",homeRoot.data.ad5.get(position));
+                        break;
+
+                    case 5:
+                        intentJump("ad5",homeRoot.data.ad5.get(position));
+                        break;
+
+                    case 6:
+                        intentJump("ad5",homeRoot.data.ad5.get(position));
+                        break;
+
+                    case 7:
+                   //     intentJump("ad5",homeRoot.data.ad5.get(position));
                         break;
                 }
             }
@@ -315,10 +352,21 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
     }
 
     /**
+     * 积分商城和真伪查询页面跳转
+     * @param string
+     * @param object
+     */
+    private void intentJump(String string,Object object) {
+        Intent intent = new Intent(getActivity(), Ad5WebView_Activity.class);
+        intent.putExtra(string, (Serializable) object);
+        getActivity().startActivity(intent);
+    }
+
+    /**
      * 初始化轮播图
      */
     private void initRoolViewPager() {
-        List<HomeRoot.DataBean.Ad1Bean> ad1 = homeRoot.data.ad1;
+        final List<HomeRoot.DataBean.Ad1Bean> ad1 = homeRoot.data.ad1;
         for (int i = 0; i < ad1.size(); i++) {
             imgUrlList.add(ad1.get(i).image);
         }
@@ -331,6 +379,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
             @Override
             public void setOnPage(int position) {
                 Toast.makeText(getActivity(), "我点击了" + position, Toast.LENGTH_SHORT).show();
+                intentJump("adl",ad1.get(position));
             }
         });
     }
@@ -373,7 +422,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         home_MyRoolViewPager = (MyRoolViewPager) view.findViewById(R.id.home_MyRoolViewPager);
         home_dots_linearLayout = (AutoLinearLayout) view.findViewById(R.id.home_dots_linearLayout);
         //多功能菜单
-        home_gridView = (GridView) view.findViewById(R.id.home_gridView);
+        home_gridView = (Home_GridView) view.findViewById(R.id.home_gridView);
 
         //优惠活动
         home_youhui_viewPager = (ViewPager) view.findViewById(R.id.home_Youhui_viewPager);
@@ -389,6 +438,10 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
         //默认的商品
         home_defaule_gridView = (Home_GridView) view.findViewById(R.id.home_defau_gridView);
+
+        //查看全部商品
+        selectAll_goods = (TextView) view.findViewById(R.id.selectAll_goods);
+        selectAll_goods.setOnClickListener(this);
     }
 
     @Override
@@ -397,6 +450,19 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
         MyBaseData myBaseData = new MyBaseData();
         myBaseData.getData(UrlUtils.HOME_URL, UrlUtils.HOME_ARGS, 1, BaseDataxUtils.NORMALTIME);
+    }
+
+    /**
+     * 查看全部商品
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.selectAll_goods:
+                startActivity(new Intent(getActivity(), SelectAllActivity.class));
+                break;
+        }
     }
 
 

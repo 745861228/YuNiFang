@@ -30,8 +30,10 @@
         <activity android:name=".navigation.NavigationActivity" />
         <activity android:name=".activity.Login_Activity" />
         <activity android:name=".base.BaseActivity" />
-        <activity android:name=".activity.Ad5WebViewActivity" />
-        <activity android:name=".activity.Home_MoreActivity"></activity>
+        <activity android:name=".activity.Ad5WebView_Activity" />
+        <activity android:name=".activity.Home_MoreActivity" />
+        <activity android:name=".activity.Particulars_Activity" />
+        <activity android:name=".activity.SelectAllActivity"></activity>
     </application>
 
 </manifest>

@@ -7,9 +7,17 @@ public class UrlUtils {
     //主页面Url
     public static final String HOME_URL = "http://m.yunifang.com/yunifang/mobile/home?";
     public static final String HOME_ARGS = "random=59676&encode=62d458fefce9c740359873cc19b05188";
+
     //分类页面的url
     public static final String CATEGORY_URL = "http://m.yunifang.com/yunifang/mobile/category/list";
     public static final String CATEGORY_ARGS = "random=9503&encode=e181334d0cd93bf2ec95f3c9f85d1dde";
+
+    //商品详情的url
+    public static final String SHOP_PARTICULARS = "http://m.yunifang.com/yunifang/mobile/goods/detail?random=6716&encode=b02382bd9e457e06e09b68a6a4f26eb4&id=";
+
+    //查看所有商品
+    public static final String ALLGOODSURL = "http://m.yunifang.com/yunifang/mobile/goods/getall?random=87749&encode=ac6bd45b8f50b626a6843b294af8fed5";
+
 
     /*返回数据：json串
     ad1--最上边viewPager数据  ad3--0元抽奖活动数据

@@ -31,7 +31,7 @@ public class Home_MoreActivity extends BaseActivity implements View.OnClickListe
     private ListView more_ListView;
     private TextView include_middle_tv;
     private ImageView back_image;
-    private ArrayList<HomeRoot.DataBean.BestSellersBean> bestSellers;
+    //  private ArrayList<HomeRoot.DataBean.BestSellersBean> bestSellers;
     private ScrollView more_scrollView;
     private HomeRoot.DataBean.SubjectsBean subjectsBean;
     private TextView title_tv;
@@ -48,21 +48,23 @@ public class Home_MoreActivity extends BaseActivity implements View.OnClickListe
         /**
          * 获取本周热销数据
          */
-        bestSellers = (ArrayList<HomeRoot.DataBean.BestSellersBean>) intent.getSerializableExtra("bestSellers");
+        //  bestSellers = (ArrayList<HomeRoot.DataBean.BestSellersBean>) intent.getSerializableExtra("bestSellers");
         /**
          * 获取热门专题更多数据
          */
         subjectsBean = (HomeRoot.DataBean.SubjectsBean) intent.getSerializableExtra("subjectsBean");
 
-        if (bestSellers!= null ) {
-            /**
-             * 本周热销
-             */
-            initView();
-        }else if (subjectsBean !=null&& subjectsBean.goodsList.size()!=0){
-            /**
-             * 热门专题
-             */
+
+//        if (bestSellers!= null ) {
+//            /**
+//             * 本周热销
+//             */
+//            initView();
+//        }else
+        /**
+         * 热门专题
+         */
+        if (subjectsBean != null && subjectsBean.goodsList.size() != 0) {
             initHotMore();
         }
 
@@ -91,10 +93,10 @@ public class Home_MoreActivity extends BaseActivity implements View.OnClickListe
         title_tv.setText(subjectsBean.title);
         detail_tv.setText(subjectsBean.detail);
 
-        more_gridView.setAdapter(new CommonAdapter<HomeRoot.DataBean.SubjectsBean.GoodsListBean>(Home_MoreActivity.this,goodsList,R.layout.home_home_gridview_item) {
+        more_gridView.setAdapter(new CommonAdapter<HomeRoot.DataBean.SubjectsBean.GoodsListBean>(Home_MoreActivity.this, goodsList, R.layout.home_home_gridview_item) {
             @Override
             public void convert(ViewHolder helper, HomeRoot.DataBean.SubjectsBean.GoodsListBean item) {
-                helper.setImageByUrl(R.id.home_default_gridView_image,item.goods_img);
+                helper.setImageByUrl(R.id.home_default_gridView_image, item.goods_img);
                 helper.setText(R.id.efficacy, item.efficacy);
                 helper.setText(R.id.goods_name, item.goods_name);
                 helper.setText(R.id.shop_price, "￥" + item.shop_price);
@@ -107,66 +109,67 @@ public class Home_MoreActivity extends BaseActivity implements View.OnClickListe
     /**
      * 本周热销
      */
-    private void initView() {
-        final List<HomeRoot.DataBean.BestSellersBean.GoodsListBean> goodsList = bestSellers.get(0).goodsList;
-        final int[] picImage = new int[]{R.mipmap.hot_rank_1,R.mipmap.hot_rank_2,R.mipmap.hot_rank_3};
-        more_ListView.setVisibility(View.VISIBLE);
-        more_scrollView.setVisibility(View.GONE);
-        include_middle_tv.setText(bestSellers.get(0).name);
-        more_ListView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return goodsList.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                    convertView = CommonUtils.inflate(R.layout.home_more_listview_item);
-                    ImageView goods_img = (ImageView) convertView.findViewById(R.id.goods_img);
-                    TextView goods_name = (TextView) convertView.findViewById(R.id.goods_name);
-                    TextView shop_price = (TextView) convertView.findViewById(R.id.shop_price);
-                    TextView market_price = (TextView) convertView.findViewById(R.id.market_price);
-                    ImageView order_image = (ImageView) convertView.findViewById(R.id.order_image);
-                    TextView order_tv = (TextView) convertView.findViewById(R.id.order_tv);
-
-                    ImageLoader.getInstance().displayImage(goodsList.get(position).goods_img,goods_img,CommonUtils.getinitOptionsCircle());
-                    goods_name.setText(goodsList.get(position).goods_name);
-                    shop_price.setText("￥"+goodsList.get(position).shop_price);
-                    market_price.setText("￥"+goodsList.get(position).market_price);
-                    if (position<=2){
-                        order_image.setVisibility(View.VISIBLE);
-                        order_tv.setVisibility(View.GONE);
-                        order_image.setImageResource(picImage[position]);
-                    }else {
-                        order_image.setVisibility(View.GONE);
-                        order_tv.setVisibility(View.VISIBLE);
-                        int i = position + 1;
-                        order_tv.setText("No"+i);
-                    }
-
-                return convertView;
-            }
-        });
-
-    }
+//    private void initView() {
+//        final List<HomeRoot.DataBean.BestSellersBean.GoodsListBean> goodsList = bestSellers.get(0).goodsList;
+//        final int[] picImage = new int[]{R.mipmap.hot_rank_1, R.mipmap.hot_rank_2, R.mipmap.hot_rank_3};
+//        more_ListView.setVisibility(View.VISIBLE);
+//        more_scrollView.setVisibility(View.GONE);
+//        include_middle_tv.setText(bestSellers.get(0).name);
+//        more_ListView.setAdapter(new BaseAdapter() {
+//            @Override
+//            public int getCount() {
+//                return goodsList.size();
+//            }
+//
+//            @Override
+//            public Object getItem(int position) {
+//                return null;
+//            }
+//
+//            @Override
+//            public long getItemId(int position) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                convertView = CommonUtils.inflate(R.layout.home_more_listview_item);
+//                ImageView goods_img = (ImageView) convertView.findViewById(R.id.goods_img);
+//                TextView goods_name = (TextView) convertView.findViewById(R.id.goods_name);
+//                TextView shop_price = (TextView) convertView.findViewById(R.id.shop_price);
+//                TextView market_price = (TextView) convertView.findViewById(R.id.market_price);
+//                ImageView order_image = (ImageView) convertView.findViewById(R.id.order_image);
+//                TextView order_tv = (TextView) convertView.findViewById(R.id.order_tv);
+//
+//                ImageLoader.getInstance().displayImage(goodsList.get(position).goods_img, goods_img, CommonUtils.getinitOptionsCircle());
+//                goods_name.setText(goodsList.get(position).goods_name);
+//                shop_price.setText("￥" + goodsList.get(position).shop_price);
+//                market_price.setText("￥" + goodsList.get(position).market_price);
+//                if (position <= 2) {
+//                    order_image.setVisibility(View.VISIBLE);
+//                    order_tv.setVisibility(View.GONE);
+//                    order_image.setImageResource(picImage[position]);
+//                } else {
+//                    order_image.setVisibility(View.GONE);
+//                    order_tv.setVisibility(View.VISIBLE);
+//                    int i = position + 1;
+//                    order_tv.setText("No" + i);
+//                }
+//
+//                return convertView;
+//            }
+//        });
+//
+//    }
 
     /**
      * 监听事件
+     *
      * @param v
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back_image:
                 finish();
                 Home_MoreActivity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
