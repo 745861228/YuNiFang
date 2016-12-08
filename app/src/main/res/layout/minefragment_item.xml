@@ -26,13 +26,15 @@
                     android:layout_width="60px"
                     android:layout_height="60px"
                     android:layout_alignParentRight="true"
-                    android:src="@mipmap/user_setting" />
+                    android:src="@mipmap/user_setting"
+                    android:id="@+id/user_setting"/>
 
                 <com.bwei.like.yunifang.view.UserImageView
                     android:layout_width="160px"
                     android:layout_height="160px"
                     android:layout_centerInParent="true"
-                    android:src="@mipmap/user_icon_no_set" />
+                    android:src="@mipmap/user_icon_no_set"
+                    />
 
             </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -122,7 +124,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160px"
+                android:layout_height="140px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
@@ -159,7 +161,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160px"
+                android:layout_height="140px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
@@ -198,7 +200,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160px"
+                android:layout_height="140px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
@@ -235,7 +237,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160px"
+                android:layout_height="140px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
@@ -274,7 +276,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160px"
+                android:layout_height="140px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
@@ -313,7 +315,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160px"
+                android:layout_height="140px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
@@ -352,7 +354,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="160px"
+                android:layout_height="140px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 

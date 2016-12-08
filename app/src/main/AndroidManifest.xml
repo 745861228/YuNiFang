@@ -33,7 +33,15 @@
         <activity android:name=".activity.Ad5WebView_Activity" />
         <activity android:name=".activity.Home_MoreActivity" />
         <activity android:name=".activity.Particulars_Activity" />
-        <activity android:name=".activity.SelectAllActivity"></activity>
+        <activity android:name=".activity.SelectAllActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <activity android:name=".activity.UserSeting_Activity"></activity>
     </application>
 
 </manifest>

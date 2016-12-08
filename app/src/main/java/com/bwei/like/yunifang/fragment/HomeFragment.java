@@ -230,6 +230,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                 Intent intent = new Intent(getActivity(), c);
                 intent.putExtra(str, (Serializable) o);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.login_in,R.anim.login_in0);
             }
         });
     }
@@ -360,6 +361,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         Intent intent = new Intent(getActivity(), Ad5WebView_Activity.class);
         intent.putExtra(string, (Serializable) object);
         getActivity().startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.login_in,R.anim.login_in0);
     }
 
     /**
@@ -446,8 +448,6 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
     @Override
     protected void onLoad() {
-
-
         MyBaseData myBaseData = new MyBaseData();
         myBaseData.getData(UrlUtils.HOME_URL, UrlUtils.HOME_ARGS, 1, BaseDataxUtils.NORMALTIME);
     }
@@ -461,6 +461,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         switch (v.getId()){
             case R.id.selectAll_goods:
                 startActivity(new Intent(getActivity(), SelectAllActivity.class));
+                getActivity().overridePendingTransition(R.anim.login_in,R.anim.login_in0);
                 break;
         }
     }
