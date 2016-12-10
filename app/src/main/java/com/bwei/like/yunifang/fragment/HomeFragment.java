@@ -54,7 +54,7 @@ import java.util.List;
 /**
  * Created by LiKe on 2016/11/28.
  */
-public class HomeFragment extends BaseFragment implements SpringView.OnFreshListener ,View.OnClickListener{
+public class HomeFragment extends BaseFragment implements SpringView.OnFreshListener ,View.OnClickListener, AdapterView.OnItemClickListener {
 
     private String data;
     private View view;
@@ -84,6 +84,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         }
     };
     private TextView selectAll_goods;
+    private List<HomeRoot.DataBean.DefaultGoodsListBean> defaultGoodsList;
 
     @Override
     protected View createSuccessView() {
@@ -160,7 +161,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
      */
     private void defaultGoodsShow() {
         home_defaule_gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        List<HomeRoot.DataBean.DefaultGoodsListBean> defaultGoodsList = homeRoot.data.defaultGoodsList;
+        defaultGoodsList = homeRoot.data.defaultGoodsList;
         home_defaule_gridView.setAdapter(new CommonAdapter<HomeRoot.DataBean.DefaultGoodsListBean>(getActivity(), defaultGoodsList, R.layout.home_home_gridview_item) {
             @Override
             public void convert(ViewHolder helper, HomeRoot.DataBean.DefaultGoodsListBean item) {
@@ -171,6 +172,18 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                 helper.setText(R.id.market_price, "￥" + item.market_price);
             }
         });
+    }
+
+    /**
+     * 最下面GridView条目监听
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        jumpParticularsActivity(Particulars_Activity.class,"id",defaultGoodsList.get(position).id);
     }
 
     /**
@@ -204,7 +217,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                     home_hot_linearLayout.addView(inflate, params);
 
                     //跳转商品详情页
-                    setHotMoreOnClickListener(inflate,goodsList.get(i),"goodsListBean", Particulars_Activity.class);
+                    setHotMoreOnClickListener(inflate,goodsList.get(i).id,"id", Particulars_Activity.class);
                 }
                 //监听大图跳转界面
                 setHotMoreOnClickListener(home_hot_LargeImage,subjects.get(position),"subjectsBean",Home_MoreActivity.class);
@@ -227,12 +240,16 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), c);
-                intent.putExtra(str, (Serializable) o);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.login_in,R.anim.login_in0);
+                jumpParticularsActivity(c, str, (Serializable) o);
             }
         });
+    }
+
+    private void jumpParticularsActivity(Class c, String str, Serializable o) {
+        Intent intent = new Intent(getActivity(), c);
+        intent.putExtra(str, o);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.login_in,R.anim.login_in0);
     }
 
     /**
@@ -440,6 +457,8 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
         //默认的商品
         home_defaule_gridView = (Home_GridView) view.findViewById(R.id.home_defau_gridView);
+        home_defaule_gridView.setOnItemClickListener(this);
+
 
         //查看全部商品
         selectAll_goods = (TextView) view.findViewById(R.id.selectAll_goods);
@@ -467,6 +486,9 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
     }
 
 
+
+
+
     class MyBaseData extends BaseDataxUtils {
 
         @Override
@@ -477,6 +499,8 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         @Override
         public void setResultData(String resultData) {
             HomeFragment.this.data = resultData;
+
+
             //解析gson
             Gson gson = new Gson();
             homeRoot = gson.fromJson(data, HomeRoot.class);

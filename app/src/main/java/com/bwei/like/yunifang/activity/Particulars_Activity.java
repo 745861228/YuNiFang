@@ -1,6 +1,7 @@
 package com.bwei.like.yunifang.activity;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -87,14 +88,12 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_particulars_);
         //初始化include头部空间
         initView();
+        Intent intent = getIntent();
 
-        //获取具体商品的id
-        HomeRoot.DataBean.SubjectsBean.GoodsListBean goodsListBean = (HomeRoot.DataBean.SubjectsBean.GoodsListBean) getIntent().getSerializableExtra("goodsListBean");
-
-        //请求数据
         MyBaseData myBaseData = new MyBaseData();
-        myBaseData.getData(UrlUtils.SHOP_PARTICULARS + goodsListBean.id, null, 0, BaseDataxUtils.NORMALTIME);
-
+        //获取具体商品的id
+        String id = intent.getStringExtra("id");
+        myBaseData.getData(UrlUtils.SHOP_PARTICULARS + id, null, 0, BaseDataxUtils.NORMALTIME);
     }
 
     /**
@@ -162,7 +161,6 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     }
 
 
-
     /**
      * 初始化活动信息
      */
@@ -187,15 +185,14 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
         goods_name.setText(goods.goods_name);
         show_price.setText("￥" + goods.shop_price);
         market_price.setText("￥" + goods.market_price);
-        sales_volume.setText(goods.sales_volume+"");
-        stock_number.setText(goods.collect_count+"");
+        sales_volume.setText(goods.sales_volume + "");
+        stock_number.setText(goods.collect_count + "");
         carriage.setText(Html.fromHtml("<font color=\'#000\'>运费 </font><font color=\'#FC6B87\'>包邮</font>"));
-        sales_volume.setText(Html.fromHtml("<font color=\'#000\'>销量 </font><font color=\'#FC6B87\'>"+sales_volume.getText()+"万</font>"));
-        stock_number.setText(Html.fromHtml("<font color=\'#000\'>收藏 </font><font color=\'#FC6B87\'>"+stock_number.getText()+"</font>"));
+        sales_volume.setText(Html.fromHtml("<font color=\'#000\'>销量 </font><font color=\'#FC6B87\'>" + sales_volume.getText() + "万</font>"));
+        stock_number.setText(Html.fromHtml("<font color=\'#000\'>收藏 </font><font color=\'#FC6B87\'>" + stock_number.getText() + "</font>"));
 
 
     }
-
 
 
     private void initView() {
@@ -245,7 +242,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private void particularsMessage() {
         pro_detail_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
         //默认展示的数据
-        particulars_recyclerView.setLayoutManager(new LinearLayoutManager(Particulars_Activity.this,LinearLayoutManager.VERTICAL,false));
+        particulars_recyclerView.setLayoutManager(new LinearLayoutManager(Particulars_Activity.this, LinearLayoutManager.VERTICAL, false));
         String goods_desc = particularsRoot.data.goods.goods_desc;
         //解析
         Gson gson = new Gson();
@@ -256,7 +253,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus){
+        if (hasFocus) {
             searchLayoutTop = search2_LinearLayout.getBottom();//获取searchLayout的顶部位置
         }
     }
@@ -264,13 +261,12 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     //监听滚动Y值变化，通过addView和removeView来实现悬停效果
     @Override
     public void onScroll(int scrollY) {
-        if(scrollY >= searchLayoutTop){
+        if (scrollY >= searchLayoutTop) {
             search1_LinearLayout.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             search1_LinearLayout.setVisibility(View.GONE);
         }
     }
-
 
 
     @Override
@@ -298,7 +294,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                 pro_details_tv.setTextColor(Color.BLACK);
                 pro_comment_tv.setTextColor(Color.BLACK);
 
-                if (proDetailAdapater == null){
+                if (proDetailAdapater == null) {
                     proDetailAdapater = new ProDetailAdapater(Particulars_Activity.this, goodsBeen);
                 }
                 particulars_recyclerView.setAdapter(proDetailAdapater);
@@ -309,10 +305,10 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                 pro_details_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
                 pro_detail_tv.setTextColor(Color.BLACK);
                 pro_comment_tv.setTextColor(Color.BLACK);
-                if (proDetailsAdapater == null){
+                if (proDetailsAdapater == null) {
                     proDetailsAdapater = new ProDetailsAdapater(attributes, Particulars_Activity.this);
                 }
-                    particulars_recyclerView.setAdapter(proDetailsAdapater);
+                particulars_recyclerView.setAdapter(proDetailsAdapater);
                 break;
             //评论
             case R.id.pro_comment_tv:
@@ -322,7 +318,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                 List<ParticularsRoot.DataBean.CommentsBean> comments = particularsRoot.data.comments;
 
 
-                 particulars_recyclerView.setAdapter(new ProCommentAdapater(comments,Particulars_Activity.this));
+                particulars_recyclerView.setAdapter(new ProCommentAdapater(comments, Particulars_Activity.this));
 
 
                 break;

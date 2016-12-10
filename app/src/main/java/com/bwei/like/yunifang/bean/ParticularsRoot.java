@@ -124,7 +124,7 @@ public class ParticularsRoot {
 
 
             public class Pictures{
-                private String normal_url;
+                public String normal_url;
             }
             public static class UserBean {
                 public String id;

@@ -1,11 +1,12 @@
 package com.bwei.like.yunifang.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by LiKe on 2016/12/3.
  */
-public class CategoryRoot {
+public class CategoryRoot implements Serializable{
 
 
     /**
@@ -18,7 +19,7 @@ public class CategoryRoot {
     public String msg;
     public DataBean data;
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * id : 16
          * cat_name : 按功效
@@ -39,7 +40,7 @@ public class CategoryRoot {
 
         public List<GoodsBriefBean> goodsBrief;
 
-        public static class CategoryBean {
+        public static class CategoryBean implements Serializable{
             public String id;
             public String cat_name;
             public String is_leaf;
@@ -51,14 +52,14 @@ public class CategoryRoot {
 
             public List<ChildrenBean> children;
 
-            public static class ChildrenBean {
+            public static class ChildrenBean implements Serializable{
                 public String id;
                 public String cat_name;
                 public String is_leaf;
             }
         }
 
-        public static class GoodsBriefBean {
+        public static class GoodsBriefBean implements Serializable{
             public String id;
             public String goods_name;
             public double shop_price;

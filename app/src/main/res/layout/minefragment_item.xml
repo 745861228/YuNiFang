@@ -124,14 +124,14 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140px"
+                android:layout_height="120px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/my_order_icon"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_centerVertical="true"
                     android:layout_margin="15px"
                     android:src="@mipmap/my_order_icon" />
@@ -161,14 +161,14 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140px"
+                android:layout_height="120px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/my_invite_gift_icon"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_centerVertical="true"
                     android:layout_margin="15px"
                     android:src="@mipmap/my_invite_gift_icon" />
@@ -200,14 +200,14 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140px"
+                android:layout_height="120px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/my_face_test_icon"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_centerVertical="true"
                     android:layout_margin="15px"
                     android:src="@mipmap/my_face_test_icon" />
@@ -237,14 +237,14 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140px"
+                android:layout_height="120px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/my_coupon_icon"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_centerVertical="true"
                     android:layout_margin="15px"
                     android:src="@mipmap/my_coupon_icon" />
@@ -276,14 +276,14 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140px"
+                android:layout_height="120px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/my_lottery_icon"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_centerVertical="true"
                     android:layout_margin="15px"
                     android:src="@mipmap/my_lottery_icon" />
@@ -315,14 +315,14 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140px"
+                android:layout_height="120px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/my_collection_icon"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_centerVertical="true"
                     android:layout_margin="15px"
                     android:src="@mipmap/my_collection_icon" />
@@ -354,14 +354,14 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="140px"
+                android:layout_height="120px"
                 android:background="@drawable/mine_item_bg"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/personal_center_contact_service_icon"
-                    android:layout_width="100px"
-                    android:layout_height="100px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_centerVertical="true"
                     android:layout_margin="15px"
                     android:src="@mipmap/personal_center_contact_service_icon" />

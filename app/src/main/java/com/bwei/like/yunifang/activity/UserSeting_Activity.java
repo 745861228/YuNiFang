@@ -1,7 +1,13 @@
 package com.bwei.like.yunifang.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -10,14 +16,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
 import com.bwei.like.yunifang.base.BaseActivity;
+import com.bwei.like.yunifang.bean.VersionInfo;
 import com.bwei.like.yunifang.utils.CommonUtils;
 import com.bwei.like.yunifang.utils.DataClearManager;
 import com.bwei.like.yunifang.utils.LogUtils;
+import com.google.gson.Gson;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.io.File;
 
@@ -29,6 +42,10 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
     private TextView include_meddim_tv;
     private String[] itemStr = {"购物须知", "意见反馈", "清除缓存", "关于我们", "拨打电话", "检查更新"};
     private File cacheDir;
+    private boolean isLaster = false;
+    private VersionInfo versionInfo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +143,21 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
 
             }
 
+            /**
+             * 检查更新
+             */
+            if (itemStr[position].equals("检查更新")){
+                next_icon.setVisibility(View.GONE);
+                user_setting_right_tv.setVisibility(View.VISIBLE);
 
+                //获取服务器版本信息
+               getVersionCode(user_setting_right_tv);
+            }
+
+
+            /**
+             * 条目点击事件
+             */
             user_Setting_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,35 +174,145 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
                         }
 
                     }
+                    /**+
+                     * 检查更新
+                     */
+                    if (itemStr[position].equals("检查更新")){
+                        if (!isLaster){
+                            //获取最新版本
+                            String downloadUrl = versionInfo.getDownloadUrl();
+                            getNetDownLoad(downloadUrl);
+                        }
+                    }
                 }
             });
-
 
             return convertView;
         }
     }
 
-
     /**
-     * 获取某个文件夹中所有文件及子文件的大小
-     *
-     * @param dir
-     * @return
+     * 下载最新版本信息
+     * @param downloadUrl
      */
-    private long getCacheSize(File dir) {
-        long size = 0;
-        File[] listFiles = dir.listFiles();
-        for (int i = 0; i < listFiles.length; i++) {
-            // 是个文件夹
-            if (listFiles[i].isDirectory()) {
-                size = size + getCacheSize(listFiles[i]);
+    private void getNetDownLoad(String downloadUrl) {
+        RequestParams params = new RequestParams(downloadUrl);
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.show();
+        x.http().get(params, new Callback.ProgressCallback<File>() {
+
+            @Override
+            public void onSuccess(File file) {
+                Toast.makeText(UserSeting_Activity.this, "下载成功！", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                //安装apk界面打开
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");
+                intent.addCategory("android.intent.category.DEFAULT");
+
+                Log.i("AAAA","-----"+file.getAbsolutePath());
+                intent.setDataAndType(
+                        Uri.fromFile(file),
+                        "application/vnd.android.package-archive");
+                startActivity(intent);
             }
-            // 当前是个文件
-            else {
-                size = size + listFiles[i].length();
+
+            @Override
+            public void onError(Throwable throwable, boolean b) {
+
             }
-        }
-        return size;
+
+            @Override
+            public void onCancelled(CancelledException e) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+
+            @Override
+            public void onWaiting() {
+
+            }
+
+            @Override
+            public void onStarted() {
+
+            }
+
+            @Override
+            public void onLoading(long l, long l1, boolean b) {
+                progressDialog.setMax((int) l);
+                progressDialog.setProgress((int) l1);
+            }
+        });
+
 
     }
+
+    /**
+     * 获取当前服务器版本信息
+     * @return
+     * @param
+     * @param user_setting_right_tv
+     */
+    private void getVersionCode(final TextView user_setting_right_tv) {
+
+        RequestParams params = new RequestParams("http://169.254.239.3:8080/versioninfo.txt");
+        x.http().get(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Gson gson = new Gson();
+                versionInfo =   gson.fromJson(s, VersionInfo.class);
+                //这是获取服务器上的版本信息
+                String versionName = versionInfo.getVersionName();
+                //获取当前应用的版本信息
+                String versionName1 = getVersionName();
+                if (versionName.equals(versionName1)){
+                    isLaster = true;
+                    user_setting_right_tv.setText("您当前已经是最新版本！");
+                }else {
+                    isLaster = false;
+                    user_setting_right_tv.setText("当前最新版本是"+versionName1);
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable throwable, boolean b) {
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException e) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    //获取本应用的版本信息
+    public String getVersionName(){
+        //获取包信息
+        PackageManager packageManager = getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+            //获取当前应用的版本信息
+            String versionName = packageInfo.versionName;
+            return versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

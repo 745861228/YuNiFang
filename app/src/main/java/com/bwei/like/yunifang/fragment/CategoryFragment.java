@@ -1,5 +1,6 @@
 package com.bwei.like.yunifang.fragment;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bwei.like.yunifang.R;
+import com.bwei.like.yunifang.activity.CateGoryActivity;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
 import com.bwei.like.yunifang.base.BaseDataxOkHttp;
@@ -22,13 +24,14 @@ import com.bwei.like.yunifang.view.ShowingPage;
 import com.google.gson.Gson;
 import com.zhy.autolayout.AutoLinearLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by LiKe on 2016/11/28.
  */
-public class CategoryFragment extends BaseFragment {
+public class CategoryFragment extends BaseFragment implements View.OnClickListener {
     private String data;
     private View inflate;
     private ImageView cateGory_classify_facial_mask;
@@ -85,6 +88,7 @@ public class CategoryFragment extends BaseFragment {
         cateGory_cat_name_gonfxiao_tv.setText("- " + categoryBean.cat_name + " -");
         for (int i = 0; i < categoryBean.children.size(); i++) {
             ImageView imageView = new ImageView(getActivity());
+            imageView.setOnClickListener(this);
             imageView.setImageResource(picArray[i]);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
             cateGory_childDrem.addView(imageView, params);
@@ -136,7 +140,7 @@ public class CategoryFragment extends BaseFragment {
         cateGory_cat_name_gonfxiao_tv = (TextView) inflate.findViewById(R.id.cateGory_cat_name_gonfxiao_tv);
 
 
-        //按肤质
+        //按肤质cateGory_childDrem
         cateGory_gridView_fuzhi = (Home_GridView) inflate.findViewById(R.id.cateGory_gridView_fuzhi);
     }
 
@@ -145,6 +149,8 @@ public class CategoryFragment extends BaseFragment {
         CategoryBaseData categoryBaseData = new CategoryBaseData();
         categoryBaseData.getData(UrlUtils.CATEGORY_URL, UrlUtils.CATEGORY_ARGS, 0, BaseDataxUtils.NORMALTIME);
     }
+
+
 
     class CategoryBaseData extends BaseDataxOkHttp {
 
@@ -164,4 +170,20 @@ public class CategoryFragment extends BaseFragment {
             }
         }
     }
+
+    @Override
+    public void onClick(View v) {
+        for (int i = 0; i < cateGory_childDrem.getChildCount(); i++) {
+            ImageView imageView = (ImageView) cateGory_childDrem.getChildAt(i);
+            if (v == imageView){
+                Intent intent = new Intent(getActivity(), CateGoryActivity.class);
+                intent.putExtra("categoryBean", (Serializable) categoryRoot.data.category.get(0));
+                intent.putExtra("position",i);
+                getActivity().startActivity(intent);
+            }
+        }
+    }
+
+
+
 }

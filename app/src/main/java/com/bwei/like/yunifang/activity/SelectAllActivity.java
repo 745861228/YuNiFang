@@ -1,5 +1,6 @@
 package com.bwei.like.yunifang.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.base.BaseActivity;
 import com.bwei.like.yunifang.base.BaseDataxUtils;
 import com.bwei.like.yunifang.bean.AllGoodsRoot;
+import com.bwei.like.yunifang.interfaces.OnItemClickListener;
 import com.bwei.like.yunifang.recyclerview_adapater.AllGoodsAdapater;
 import com.bwei.like.yunifang.utils.CommonUtils;
 import com.bwei.like.yunifang.utils.LogUtils;
@@ -69,31 +71,50 @@ public class SelectAllActivity extends BaseActivity implements SpringView.OnFres
             @Override
             public void setResultData(String resultData) {
                 LogUtils.i("TAG*********", resultData);
-                //解析数据
-                Gson gson = new Gson();
-                AllGoodsRoot allGoodsRoot = gson.fromJson(resultData, AllGoodsRoot.class);
-                if (allGoodsRoot != null && allGoodsRoot.data != null) {
-                    dataBeanArrayList.addAll(allGoodsRoot.data);
-                    select_recyclerView.addItemDecoration(new DividerGridItemDecoration(CommonUtils.dip2px(5)));
-                    select_recyclerView.setLayoutManager(new GridLayoutManager(SelectAllActivity.this, 2, GridLayoutManager.VERTICAL, false));
-                    for (int i = 0; i < dataBeanArrayList.size(); i++) {
-                        for (int j = dataBeanArrayList.size() - 1; j > i; j--) {
-                            if (dataBeanArrayList.get(i).goods_name.equals(dataBeanArrayList.get(j).goods_name)) {
-                                dataBeanArrayList.remove(j);
-                            }
-                        }
-                    }
+                initGsonData(resultData);
 
-                    if (allGoodsAdapater == null) {
-                        allGoodsAdapater = new AllGoodsAdapater(dataBeanArrayList, SelectAllActivity.this);
-                        select_recyclerView.setAdapter(allGoodsAdapater);
-                    } else {
-                        allGoodsAdapater.notifyDataSetChanged();
-                    }
-                }
             }
         };
         baseDataxUtils.getData(UrlUtils.ALLGOODSURL, null, 0, BaseDataxUtils.NOTIME);
+    }
+
+    /**
+     * 解析Gson数据
+     * @param resultData
+     */
+    private void initGsonData(String resultData) {
+        //解析数据
+        Gson gson = new Gson();
+        AllGoodsRoot allGoodsRoot = gson.fromJson(resultData, AllGoodsRoot.class);
+        if (allGoodsRoot != null && allGoodsRoot.data != null) {
+            dataBeanArrayList.addAll(allGoodsRoot.data);
+            select_recyclerView.addItemDecoration(new DividerGridItemDecoration(CommonUtils.dip2px(5)));
+            select_recyclerView.setLayoutManager(new GridLayoutManager(SelectAllActivity.this, 2, GridLayoutManager.VERTICAL, false));
+            for (int i = 0; i < dataBeanArrayList.size(); i++) {
+                for (int j = dataBeanArrayList.size() - 1; j > i; j--) {
+                    if (dataBeanArrayList.get(i).goods_name.equals(dataBeanArrayList.get(j).goods_name)) {
+                        dataBeanArrayList.remove(j);
+                    }
+                }
+            }
+
+            if (allGoodsAdapater == null) {
+                allGoodsAdapater = new AllGoodsAdapater(dataBeanArrayList, SelectAllActivity.this);
+                select_recyclerView.setAdapter(allGoodsAdapater);
+            } else {
+                allGoodsAdapater.notifyDataSetChanged();
+            }
+        }
+        allGoodsAdapater.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(SelectAllActivity.this,Particulars_Activity.class);
+                intent.putExtra("id",dataBeanArrayList.get(position).id);
+                startActivity(intent);
+                SelectAllActivity.this.overridePendingTransition(R.anim.login_in,R.anim.login_in0);
+            }
+        });
+
     }
 
     /**

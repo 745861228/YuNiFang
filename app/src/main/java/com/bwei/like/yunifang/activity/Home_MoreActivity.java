@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,7 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Home_MoreActivity extends BaseActivity implements View.OnClickListener {
+public class Home_MoreActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private ListView more_ListView;
     private TextView include_middle_tv;
@@ -37,6 +38,7 @@ public class Home_MoreActivity extends BaseActivity implements View.OnClickListe
     private TextView title_tv;
     private TextView detail_tv;
     private Home_GridView more_gridView;
+    private List<HomeRoot.DataBean.SubjectsBean.GoodsListBean> goodsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +90,10 @@ public class Home_MoreActivity extends BaseActivity implements View.OnClickListe
         title_tv = (TextView) findViewById(R.id.title_tv);
         detail_tv = (TextView) findViewById(R.id.detail_tv);
         more_gridView = (Home_GridView) findViewById(R.id.more_gridView);
+        more_gridView.setOnItemClickListener(this);
 
-        List<HomeRoot.DataBean.SubjectsBean.GoodsListBean> goodsList = subjectsBean.goodsList;
+
+        goodsList = subjectsBean.goodsList;
         title_tv.setText(subjectsBean.title);
         detail_tv.setText(subjectsBean.detail);
 
@@ -176,5 +180,12 @@ public class Home_MoreActivity extends BaseActivity implements View.OnClickListe
                 break;
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(Home_MoreActivity.this,Particulars_Activity.class);
+        intent.putExtra("id",goodsList.get(position).id);
+        startActivity(intent);
     }
 }
