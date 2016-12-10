@@ -1,16 +1,23 @@
 package com.bwei.like.yunifang.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bwei.like.yunifang.Itemdecoration.DividerGridItemDecoration;
 import com.bwei.like.yunifang.R;
+import com.bwei.like.yunifang.activity.Particulars_Activity;
+import com.bwei.like.yunifang.activity.SelectAllActivity;
 import com.bwei.like.yunifang.base.BaseDataxUtils;
 import com.bwei.like.yunifang.base.BaseFragment;
 import com.bwei.like.yunifang.bean.CateGorySonFragmentRoot;
+import com.bwei.like.yunifang.interfaces.OnItemClickListener;
 import com.bwei.like.yunifang.recyclerview_adapater.CateGorySonFragmentAdapater;
 import com.bwei.like.yunifang.utils.CommonUtils;
 import com.bwei.like.yunifang.utils.LogUtils;
@@ -32,6 +39,7 @@ public class CateGorySonFragment extends BaseFragment implements SpringView.OnFr
     private RecyclerView mRecyclerView;
     private ArrayList<CateGorySonFragmentRoot.DataBean> data;
     private View view;
+    private ImageView back_image;
 
     @Override
     protected View createSuccessView() {
@@ -42,8 +50,19 @@ public class CateGorySonFragment extends BaseFragment implements SpringView.OnFr
     }
 
     private void initData() {
+        mRecyclerView.addItemDecoration(new DividerGridItemDecoration(CommonUtils.dip2px(5)));
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false));
-        mRecyclerView.setAdapter(new CateGorySonFragmentAdapater(data,getActivity()));
+        CateGorySonFragmentAdapater cateGorySonFragmentAdapater = new CateGorySonFragmentAdapater(data, getActivity());
+        mRecyclerView.setAdapter(cateGorySonFragmentAdapater);
+        cateGorySonFragmentAdapater.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(getActivity(), Particulars_Activity.class);
+                intent.putExtra("id",data.get(position).id);
+                getActivity().startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.login_in,R.anim.login_in0);
+            }
+        });
     }
 
     /**
@@ -59,11 +78,12 @@ public class CateGorySonFragment extends BaseFragment implements SpringView.OnFr
         // home_springView.setFooter(new DefaultFooter(getActivity()));
         //设置springView头部隐藏
         mSpringView.setType(SpringView.Type.FOLLOW);
+        TextView include_meddim_tv = (TextView) mSpringView.findViewById(R.id.include_meddim_tv);
+
     }
 
     @Override
     protected void onLoad() {
-
         //获取id值
         String id = CateGorySonFragment.this.getArguments().getString("id", null);
         MyBaseData myBaseData = new MyBaseData();

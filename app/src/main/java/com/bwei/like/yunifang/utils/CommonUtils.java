@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.View;
 
+import com.bwei.like.yunifang.R;
+import com.bwei.like.yunifang.activity.Ad5WebView_Activity;
 import com.bwei.like.yunifang.application.MyApplication;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
@@ -124,4 +126,5 @@ public class CommonUtils {
     public static DisplayImageOptions getinitOptionsCircle(){
         return ImageLoaderUtils.initOptionsCircle();
     }
+
 }

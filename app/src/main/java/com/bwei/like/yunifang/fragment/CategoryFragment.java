@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.activity.CateGoryActivity;
+import com.bwei.like.yunifang.activity.Particulars_Activity;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
 import com.bwei.like.yunifang.base.BaseDataxOkHttp;
@@ -31,7 +34,7 @@ import java.util.List;
 /**
  * Created by LiKe on 2016/11/28.
  */
-public class CategoryFragment extends BaseFragment implements View.OnClickListener {
+public class CategoryFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener {
     private String data;
     private View inflate;
     private ImageView cateGory_classify_facial_mask;
@@ -45,6 +48,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     private AutoLinearLayout cateGory_childDrem;
     private TextView cateGory_cat_name_gonfxiao_tv;
     private Home_GridView cateGory_gridView_fuzhi;
+    private ArrayList<CategoryRoot.DataBean.GoodsBriefBean> goodsBriefBeanArrayList;
 
     @Override
     protected View createSuccessView() {
@@ -101,7 +105,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     private void initGridView() {
         //获取当前数据集合
         List<CategoryRoot.DataBean.GoodsBriefBean> goodsBrief = categoryRoot.data.goodsBrief;
-        ArrayList<CategoryRoot.DataBean.GoodsBriefBean> goodsBriefBeanArrayList = new ArrayList<>();
+        goodsBriefBeanArrayList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             goodsBriefBeanArrayList.add(goodsBrief.get(i));
         }
@@ -134,7 +138,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
 
         //明星产品
         cateGory_girdView_last = (Home_GridView) inflate.findViewById(R.id.cateGory_girdView_last);
-
+        cateGory_girdView_last.setOnItemClickListener(this);
         //按功效
         cateGory_childDrem = (AutoLinearLayout) inflate.findViewById(R.id.cateGory_childDrem);
         cateGory_cat_name_gonfxiao_tv = (TextView) inflate.findViewById(R.id.cateGory_cat_name_gonfxiao_tv);
@@ -142,6 +146,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
 
         //按肤质cateGory_childDrem
         cateGory_gridView_fuzhi = (Home_GridView) inflate.findViewById(R.id.cateGory_gridView_fuzhi);
+        cateGory_gridView_fuzhi.setOnItemClickListener(this);
     }
 
     @Override
@@ -150,6 +155,28 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
         categoryBaseData.getData(UrlUtils.CATEGORY_URL, UrlUtils.CATEGORY_ARGS, 0, BaseDataxUtils.NORMALTIME);
     }
 
+    /**
+     * gridview条目监听，点击跳转详情界面
+     *
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (parent.getId() == cateGory_gridView_fuzhi.getId()) {
+            jumpCateGoryActivity(position, categoryRoot.data.category.get(2), CateGoryActivity.class, "position");
+        }
+
+        if (parent.getId() == cateGory_girdView_last.getId()) {
+            Intent intent = new Intent(getActivity(), Particulars_Activity.class);
+            intent.putExtra("id", goodsBriefBeanArrayList.get(position).id);
+            getActivity().startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+        }
+    }
 
 
     class CategoryBaseData extends BaseDataxOkHttp {
@@ -175,15 +202,19 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         for (int i = 0; i < cateGory_childDrem.getChildCount(); i++) {
             ImageView imageView = (ImageView) cateGory_childDrem.getChildAt(i);
-            if (v == imageView){
-                Intent intent = new Intent(getActivity(), CateGoryActivity.class);
-                intent.putExtra("categoryBean", (Serializable) categoryRoot.data.category.get(0));
-                intent.putExtra("position",i);
-                getActivity().startActivity(intent);
+            if (v == imageView) {
+                jumpCateGoryActivity(i, categoryRoot.data.category.get(0), CateGoryActivity.class, "position");
             }
         }
     }
 
+    private void jumpCateGoryActivity(int i, Object o, Class c, String string) {
+        Intent intent = new Intent(getActivity(), c);
+        intent.putExtra("categoryBean", (Serializable) o);
+        intent.putExtra(string, i);
+        getActivity().startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+    }
 
 
 }

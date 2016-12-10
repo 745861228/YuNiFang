@@ -43,6 +43,7 @@ public class MyViewPagerIndicator extends LinearLayout implements View.OnClickLi
         for (int i = 0; i < children.size(); i++) {
             Button button = new Button(getContext());
             button.setText(children.get(i).cat_name);
+            button.setTextSize(10);
             button.setOnClickListener(this);
             button.setBackground(null);
             LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,1.0f);
