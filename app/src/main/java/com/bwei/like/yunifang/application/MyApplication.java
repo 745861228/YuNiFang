@@ -25,6 +25,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        //imageLoader初始化
+        ImageLoaderUtils.initConfiguration(getApplicationContext());
 
         AutoLayoutConifg.getInstance().useDeviceSize();
         //获取上下文
@@ -33,8 +35,6 @@ public class MyApplication extends Application {
         handler = new Handler();
         //获取主线程号
         mainThreadId = Process.myTid();
-        //imageLoader初始化
-        ImageLoaderUtils.initConfiguration(this);
         //初始化xUtils3
         x.Ext.init(this);
         //设置degbug模式

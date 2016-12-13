@@ -122,36 +122,36 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
                 next_icon.setVisibility(View.GONE);
                 try {
                     long folderSize = DataClearManager.getFolderSize(cacheDir);
-                    user_setting_right_tv.setText("已缓存"+DataClearManager.getFormatSize( folderSize));
+                    user_setting_right_tv.setText("已缓存" + DataClearManager.getFormatSize(folderSize));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
 
-            if (itemStr[position].equals("关于我们")){
+            if (itemStr[position].equals("关于我们")) {
                 next_icon.setImageResource(R.mipmap.about_us_code);
             }
 
-            if (itemStr[position].equals("拨打电话")){
+            if (itemStr[position].equals("拨打电话")) {
                 next_icon.setVisibility(View.GONE);
                 user_setting_right_tv.setText("400-688-0900");
                 user_setting_right_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
             }
 
-            if (itemStr[position].equals("关于我们")){
+            if (itemStr[position].equals("关于我们")) {
 
             }
 
             /**
              * 检查更新
              */
-            if (itemStr[position].equals("检查更新")){
+            if (itemStr[position].equals("检查更新")) {
                 next_icon.setVisibility(View.GONE);
                 user_setting_right_tv.setVisibility(View.VISIBLE);
 
                 //获取服务器版本信息
-               getVersionCode(user_setting_right_tv);
+                getVersionCode(user_setting_right_tv);
             }
 
 
@@ -161,13 +161,13 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
             user_Setting_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (itemStr[position].equals("清除缓存")){
+                    if (itemStr[position].equals("清除缓存")) {
                         DataClearManager.deleteCache(cacheDir);
                         long folderSize = 0;
                         try {
                             folderSize = DataClearManager.getFolderSize(cacheDir);
-                            user_setting_right_tv.setText("已缓存"+DataClearManager.getFormatSize( folderSize));
-                            LogUtils.i("TAG=======","点击了+"+itemStr[position]);
+                            user_setting_right_tv.setText("已缓存" + DataClearManager.getFormatSize(folderSize));
+                            LogUtils.i("TAG=======", "点击了+" + itemStr[position]);
                             MyAdapater.this.notifyDataSetChanged();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -177,12 +177,18 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
                     /**+
                      * 检查更新
                      */
-                    if (itemStr[position].equals("检查更新")){
-                        if (!isLaster){
+                    if (itemStr[position].equals("检查更新")) {
+                        if (!isLaster) {
                             //获取最新版本
                             String downloadUrl = versionInfo.getDownloadUrl();
                             getNetDownLoad(downloadUrl);
                         }
+                    }
+
+                    if (itemStr[position].equals("关于我们")){
+                        startActivity(new Intent(UserSeting_Activity.this,ZXingActivity.class));
+                        UserSeting_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+                        Toast.makeText(UserSeting_Activity.this, "点击了关于我们", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -193,6 +199,7 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
 
     /**
      * 下载最新版本信息
+     *
      * @param downloadUrl
      */
     private void getNetDownLoad(String downloadUrl) {
@@ -211,10 +218,8 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
                 intent.setAction("android.intent.action.VIEW");
                 intent.addCategory("android.intent.category.DEFAULT");
 
-                Log.i("AAAA","-----"+file.getAbsolutePath());
-                intent.setDataAndType(
-                        Uri.fromFile(file),
-                        "application/vnd.android.package-archive");
+                Log.i("AAAA", "-----" + file.getAbsolutePath());
+                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
                 startActivity(intent);
             }
 
@@ -255,9 +260,10 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
 
     /**
      * 获取当前服务器版本信息
-     * @return
+     *
      * @param
      * @param user_setting_right_tv
+     * @return
      */
     private void getVersionCode(final TextView user_setting_right_tv) {
 
@@ -266,17 +272,17 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(String s) {
                 Gson gson = new Gson();
-                versionInfo =   gson.fromJson(s, VersionInfo.class);
+                versionInfo = gson.fromJson(s, VersionInfo.class);
                 //这是获取服务器上的版本信息
                 String versionName = versionInfo.getVersionName();
                 //获取当前应用的版本信息
                 String versionName1 = getVersionName();
-                if (versionName.equals(versionName1)){
+                if (versionName.equals(versionName1)) {
                     isLaster = true;
                     user_setting_right_tv.setText("您当前已经是最新版本！");
-                }else {
+                } else {
                     isLaster = false;
-                    user_setting_right_tv.setText("当前最新版本是"+versionName1);
+                    user_setting_right_tv.setText("当前最新版本是" + versionName1);
                 }
 
 
@@ -300,7 +306,7 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
     }
 
     //获取本应用的版本信息
-    public String getVersionName(){
+    public String getVersionName() {
         //获取包信息
         PackageManager packageManager = getPackageManager();
         try {

@@ -101,7 +101,10 @@ public class CateGorySonFragment extends BaseFragment implements SpringView.OnFr
 
     @Override
     public void onRefresh() {
-
+        String id = CateGorySonFragment.this.getArguments().getString("id", null);
+        MyBaseData myBaseData = new MyBaseData();
+        myBaseData.getData(UrlUtils.CATEGORY_ID+id,"",0,BaseDataxUtils.NOTIME);
+        lode();
     }
 
     @Override

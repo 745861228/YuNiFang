@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bwei.like.yunifang.utils.CommonUtils;
+import com.bwei.like.yunifang.utils.ImageLoaderUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
@@ -116,7 +117,7 @@ public class ViewHolder {
      * @return
      */
     public ViewHolder setImageByUrl(int viewId, String url) {
-        ImageLoader.getInstance().displayImage(url, (ImageView) getView(viewId), CommonUtils.getinitOptionsCircle());
+        ImageLoader.getInstance().displayImage(url, (ImageView) getView(viewId), ImageLoaderUtils.initOptionsCircle());
         return this;
     }
 

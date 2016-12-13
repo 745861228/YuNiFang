@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.activity.CateGoryActivity;
+import com.bwei.like.yunifang.activity.CateGoryOtherActivity;
 import com.bwei.like.yunifang.activity.Particulars_Activity;
+import com.bwei.like.yunifang.activity.SearchActivity;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
 import com.bwei.like.yunifang.base.BaseDataxOkHttp;
@@ -49,6 +52,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     private TextView cateGory_cat_name_gonfxiao_tv;
     private Home_GridView cateGory_gridView_fuzhi;
     private ArrayList<CategoryRoot.DataBean.GoodsBriefBean> goodsBriefBeanArrayList;
+    private Button search_button;
 
     @Override
     protected View createSuccessView() {
@@ -124,17 +128,27 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     private void initView() {
         cateGory_classify_facial_mask = (ImageView) inflate.findViewById(R.id.cateGory_classify_facial_mask);
         cateGory_classify_facial_mask.setScaleType(ImageView.ScaleType.FIT_XY);
+        cateGory_classify_facial_mask.setOnClickListener(this);
+
         cataeGory_classify_emollient_water = (ImageView) inflate.findViewById(R.id.cateGory_classify_emollient_water);
         cataeGory_classify_emollient_water.setScaleType(ImageView.ScaleType.FIT_XY);
+        cataeGory_classify_emollient_water.setOnClickListener(this);
+
         cateGory_classify_body_lotion = (ImageView) inflate.findViewById(R.id.cateGory_classify_body_lotion);
         cateGory_classify_body_lotion.setScaleType(ImageView.ScaleType.FIT_XY);
+        cateGory_classify_body_lotion.setOnClickListener(this);
+
         cateGory_classify_facial_cleanser = (ImageView) inflate.findViewById(R.id.cateGory_classify_facial_cleanser);
         cateGory_classify_facial_cleanser.setScaleType(ImageView.ScaleType.FIT_XY);
+        cateGory_classify_facial_cleanser.setOnClickListener(this);
+
         cateGory_classify_other = (ImageView) inflate.findViewById(R.id.cateGory_classify_other);
         cateGory_classify_other.setScaleType(ImageView.ScaleType.FIT_XY);
+        cateGory_classify_other.setOnClickListener(this);
+
         cateGory_classify_kit = (ImageView) inflate.findViewById(R.id.cateGory_classify_kit);
         cateGory_classify_kit.setScaleType(ImageView.ScaleType.FIT_XY);
-
+        cateGory_classify_kit.setOnClickListener(this);
 
         //明星产品
         cateGory_girdView_last = (Home_GridView) inflate.findViewById(R.id.cateGory_girdView_last);
@@ -147,6 +161,9 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
         //按肤质cateGory_childDrem
         cateGory_gridView_fuzhi = (Home_GridView) inflate.findViewById(R.id.cateGory_gridView_fuzhi);
         cateGory_gridView_fuzhi.setOnItemClickListener(this);
+
+        search_button = (Button) inflate.findViewById(R.id.search_button);
+        search_button.setOnClickListener(this);
     }
 
     @Override
@@ -167,7 +184,7 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent.getId() == cateGory_gridView_fuzhi.getId()) {
-            jumpCateGoryActivity(position, categoryRoot.data.category.get(2), CateGoryActivity.class, "position");
+            jumpCateGoryActivity(position, categoryRoot.data.category.get(2), CateGoryActivity.class, "position","categoryBean");
         }
 
         if (parent.getId() == cateGory_girdView_last.getId()) {
@@ -198,19 +215,49 @@ public class CategoryFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
+
+    /**
+     * 图片点击事件
+     * @param
+     */
+
     @Override
     public void onClick(View v) {
         for (int i = 0; i < cateGory_childDrem.getChildCount(); i++) {
             ImageView imageView = (ImageView) cateGory_childDrem.getChildAt(i);
             if (v == imageView) {
-                jumpCateGoryActivity(i, categoryRoot.data.category.get(0), CateGoryActivity.class, "position");
+                jumpCateGoryActivity(i, categoryRoot.data.category.get(0), CateGoryActivity.class, "position","categoryBean");
             }
+        }
+    //图片点击事件
+        switch (v.getId()){
+            case R.id.cateGory_classify_facial_mask:
+                jumpCateGoryActivity(0, categoryRoot.data.category.get(1), CateGoryActivity.class, "position","categoryBean");
+                break;
+            case R.id.cateGory_classify_emollient_water:
+                jumpCateGoryActivity(0,categoryRoot.data.category.get(1).children.get(1), CateGoryOtherActivity.class,"position","childrenBean");
+                break;
+            case R.id.cateGory_classify_body_lotion:
+                jumpCateGoryActivity(0,categoryRoot.data.category.get(1).children.get(2), CateGoryOtherActivity.class,"position","childrenBean");
+                break;
+            case R.id.cateGory_classify_facial_cleanser:
+                jumpCateGoryActivity(0,categoryRoot.data.category.get(1).children.get(3), CateGoryOtherActivity.class,"position","childrenBean");
+                break;
+            case R.id.cateGory_classify_other:
+                jumpCateGoryActivity(0,categoryRoot.data.category.get(1).children.get(4), CateGoryOtherActivity.class,"position","childrenBean");
+                break;
+            case R.id.cateGory_classify_kit:
+                jumpCateGoryActivity(0,categoryRoot.data.category.get(1).children.get(5), CateGoryOtherActivity.class,"position","childrenBean");
+                break;
+            case R.id.search_button:
+                jumpCateGoryActivity(0,null, SearchActivity.class,null,null);
+                break;
         }
     }
 
-    private void jumpCateGoryActivity(int i, Object o, Class c, String string) {
+    private void jumpCateGoryActivity(int i, Object o, Class c, String string,String name) {
         Intent intent = new Intent(getActivity(), c);
-        intent.putExtra("categoryBean", (Serializable) o);
+        intent.putExtra(name, (Serializable) o);
         intent.putExtra(string, i);
         getActivity().startActivity(intent);
         getActivity().overridePendingTransition(R.anim.login_in, R.anim.login_in0);

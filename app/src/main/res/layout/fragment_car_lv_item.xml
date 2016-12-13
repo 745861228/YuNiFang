@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_marginTop="30px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cart_all_check_item"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="18px"
+            android:button="@null"
+            android:drawableLeft="@drawable/cart_cb_selector"
+            android:gravity="center_vertical" />
+
+        <ImageView
+            android:id="@+id/cart_lv_item_img"
+            android:layout_width="200px"
+            android:layout_height="150px"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/check_normal_3" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="10px">
+
+            <TextView
+                android:id="@+id/cart_lv_item_goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:gravity="center_vertical"
+                android:lines="2"
+                android:text="看电视率看来你百度百科三大非的郭德纲勺v都是"
+                android:textColor="#000" />
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/cart_lv_item_show_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="￥89.90"
+                    android:textColor="@color/YuniFangZhangHao_textColor" />
+
+                <TextView
+                    android:id="@+id/cart_lv_item_goods_num"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="数量: 2"
+                    android:textColor="#B4B4B4" />
+
+                <ImageView
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10px"
+                    android:src="@mipmap/coupons" />
+
+                <ImageView
+                    android:layout_width="50px"
+                    android:layout_height="50px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10px"
+                    android:src="@mipmap/pledge" />
+            </com.zhy.autolayout.AutoLinearLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/cart_lv_item_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20px"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10px"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="购买数量" />
+
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/reduce_number"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:background="@drawable/share_square"
+                android:text="一"
+                android:textColor="#000" />
+
+            <Button
+                android:id="@+id/show_number"
+                android:layout_width="70px"
+                android:layout_height="50px"
+                android:background="@drawable/share_square"
+                android:text="1"
+                android:textColor="#000" />
+
+            <Button
+                android:id="@+id/add_number"
+                android:layout_width="50px"
+                android:layout_height="50px"
+                android:background="@drawable/share_square"
+                android:text="十"
+                android:textColor="#000" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

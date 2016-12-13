@@ -127,4 +127,22 @@ public class CommonUtils {
         return ImageLoaderUtils.initOptionsCircle();
     }
 
+    //保存String
+    public static void saveString(String str, String flag) {
+        if (sharedPreferences == null) {
+            sharedPreferences = MyApplication.getContext().getSharedPreferences(SP_NAME, MyApplication.getContext().MODE_PRIVATE);
+        }
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(str, flag);
+        edit.commit();
+    }
+
+    //获取sp
+    public static String getString(String str) {
+        if (sharedPreferences == null) {
+            sharedPreferences = MyApplication.getContext().getSharedPreferences(SP_NAME, MyApplication.getContext().MODE_PRIVATE);
+        }
+        return sharedPreferences.getString(str, null);
+    }
+
 }

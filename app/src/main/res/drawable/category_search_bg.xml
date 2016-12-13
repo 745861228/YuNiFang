@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#EEEEEE" /><!-- 背景填充颜色 -->
+    <corners
+        android:topLeftRadius="1000px"
+        android:topRightRadius="1000px"
+        android:bottomLeftRadius="1000px"
+        android:bottomRightRadius="1000px"/><!-- 边角圆弧的半径 -->
+</shape>

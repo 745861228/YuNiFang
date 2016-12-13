@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/inclued_top" />
+
+    <ImageView
+        android:id="@+id/iv_zXing"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:id="@+id/zXing_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/iv_zXing"
+        android:layout_alignLeft="@id/iv_zXing"
+        android:layout_marginBottom="20px"
+        android:src="@mipmap/icon_share" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="御泥坊"
+        android:layout_toRightOf="@id/zXing_logo"
+        android:layout_alignTop="@id/zXing_logo"
+        android:layout_marginLeft="10px"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.0"
+        android:layout_toRightOf="@id/zXing_logo"
+        android:layout_alignBottom="@id/zXing_logo"
+        android:layout_marginLeft="10px"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="【推荐给好友扫一扫，马上下载】"
+        android:layout_below="@id/iv_zXing"
+        android:layout_marginTop="10px"
+        android:layout_centerHorizontal="true"/>
+
+</com.zhy.autolayout.AutoRelativeLayout>

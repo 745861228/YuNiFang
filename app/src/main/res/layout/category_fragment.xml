@@ -4,11 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20px"
+        android:background="@drawable/category_search_bg"
+        android:drawableLeft="@mipmap/icon_search"
+        android:gravity="left|center"
+        android:padding="10px"
+        android:text="请输入商品名称"
+        android:textColor="#fff" />
 
     <com.liaoinstan.springview.widget.SpringView
         android:id="@+id/cateGory_springView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true">
 
         <ScrollView
             android:layout_width="match_parent"

@@ -11,6 +11,7 @@ import com.bwei.like.yunifang.holder.AllGoodsHolder;
 import com.bwei.like.yunifang.holder.BaseHolder;
 import com.bwei.like.yunifang.interfaces.OnItemClickListener;
 import com.bwei.like.yunifang.utils.CommonUtils;
+import com.bwei.like.yunifang.utils.LogUtils;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,7 @@ public class AllGoodsAdapater extends RecyclerView.Adapter<AllGoodsHolder> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUtils.i("arrayList****",position+"");
                 onItmeClickListener.onItemClick(position);
             }
         });

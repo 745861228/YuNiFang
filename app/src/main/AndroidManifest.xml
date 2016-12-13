@@ -43,7 +43,10 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activity.UserSeting_Activity" />
-        <activity android:name=".activity.CateGoryActivity"></activity>
+        <activity android:name=".activity.CateGoryActivity" />
+        <activity android:name=".activity.CateGoryOtherActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.ZXingActivity"></activity>
     </application>
 
 </manifest>

@@ -17,6 +17,9 @@ import com.bwei.like.yunifang.fragment.CateGorySonFragment;
 import com.bwei.like.yunifang.utils.LogUtils;
 import com.bwei.like.yunifang.view.MyViewPagerIndicator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CateGoryActivity extends BaseActivity implements View.OnClickListener {
 
     private MyViewPagerIndicator mIndicator;
@@ -24,6 +27,7 @@ public class CateGoryActivity extends BaseActivity implements View.OnClickListen
     private CategoryRoot.DataBean.CategoryBean categoryBean;
     private TextView include_meddim_tv;
     private ImageView back_image;
+    private ArrayList<CategoryRoot.DataBean.CategoryBean.ChildrenBean> childrenBeenList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +39,19 @@ public class CateGoryActivity extends BaseActivity implements View.OnClickListen
         categoryBean = (CategoryRoot.DataBean.CategoryBean) intent.getSerializableExtra("categoryBean");
         initView();
 
+        childrenBeenList = new ArrayList<>();
+            if (categoryBean.cat_name.equals("按属性")){
+                for (int i = 0; i < categoryBean.children.size(); i++) {
+                    if (i>5){
+                        childrenBeenList.add(categoryBean.children.get(i));
+                    }
+                }
+            }else {
+                childrenBeenList.addAll(categoryBean.children);
+            }
         initDatas();
 
-        mIndicator.setViewPagerIndicator(categoryBean.children,mViewPager);
+        mIndicator.setViewPagerIndicator(childrenBeenList,mViewPager);
         mViewPager.setCurrentItem(position);
     }
 
@@ -48,12 +62,12 @@ public class CateGoryActivity extends BaseActivity implements View.OnClickListen
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return CateGorySonFragment.getFragment(categoryBean.children.get(position).id);
+                return CateGorySonFragment.getFragment(childrenBeenList.get(position).id);
             }
 
             @Override
             public int getCount() {
-                return categoryBean.children.size();
+                return childrenBeenList.size();
             }
         });
     }

@@ -493,7 +493,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
         @Override
         protected void setResulttError(ShowingPage.StateType stateLoadError) {
-            HomeFragment.this.showingPage(ShowingPage.StateType.STATE_LOAD_ERROR);
+            HomeFragment.this.showingPage(ShowingPage.StateType.STATE_LOAD_EMPTY);
         }
 
         @Override

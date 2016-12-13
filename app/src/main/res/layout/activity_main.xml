@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.bwei.like.yunifang.view.NoScrollViewPager
-        android:id="@+id/main_viewPager"
+    <!--<com.bwei.like.yunifang.view.NoScrollViewPager-->
+    <!--android:id="@+id/main_viewPager"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"></com.bwei.like.yunifang.view.NoScrollViewPager>-->
+
+    <FrameLayout
+        android:id="@+id/main_frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"></com.bwei.like.yunifang.view.NoScrollViewPager>
+        android:layout_height="0px"
+        android:layout_weight="1" />
 
     <RadioGroup
         android:id="@+id/main_radioGroup"
@@ -20,48 +26,48 @@
         <RadioButton
             android:id="@+id/rb_home_page"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:text="@string/rb_home_page"
+            android:layout_weight="1"
             android:button="@null"
             android:checked="true"
-            android:drawableTop="@drawable/rb_home_page_selector"/>
+            android:drawableTop="@drawable/rb_home_page_selector"
+            android:gravity="center_horizontal"
+            android:text="@string/rb_home_page" />
 
         <RadioButton
             android:id="@+id/rb_category_page"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:text="@string/rb_catgory_page"
+            android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/rb_categroy_page_selector"/>
+            android:drawableTop="@drawable/rb_categroy_page_selector"
+            android:gravity="center_horizontal"
+            android:text="@string/rb_catgory_page" />
 
         <RadioButton
             android:id="@+id/rb_cart_page"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:text="@string/rb_cart_page"
+            android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/rb_cart_page_selector"/>
+            android:drawableTop="@drawable/rb_cart_page_selector"
+            android:gravity="center_horizontal"
+            android:text="@string/rb_cart_page" />
 
         <RadioButton
             android:id="@+id/rb_mine_page"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:text="@string/rb_mine_page"
+            android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/rb_mine_page_selector"/>
+            android:drawableTop="@drawable/rb_mine_page_selector"
+            android:gravity="center_horizontal"
+            android:text="@string/rb_mine_page" />
 
     </RadioGroup>
 
-</LinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>
