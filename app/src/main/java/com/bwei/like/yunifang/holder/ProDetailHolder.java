@@ -19,6 +19,7 @@ public class ProDetailHolder extends BaseHolder<GoodsDesc> {
     public ProDetailHolder(View itemView) {
         super(itemView);
         imageView = (ImageView) itemView.findViewById(R.id.proDetail_item_image);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     @Override

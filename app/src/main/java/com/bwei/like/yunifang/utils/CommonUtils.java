@@ -145,4 +145,14 @@ public class CommonUtils {
         return sharedPreferences.getString(str, null);
     }
 
+
+    //清楚sp
+    public static void clearSp(){
+        if (sharedPreferences == null) {
+            sharedPreferences = MyApplication.getContext().getSharedPreferences(SP_NAME, MyApplication.getContext().MODE_PRIVATE);
+        }
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.clear();
+        edit.commit();
+    }
 }

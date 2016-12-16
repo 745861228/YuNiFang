@@ -27,6 +27,7 @@ import com.bwei.like.yunifang.fragment.CategoryFragment;
 import com.bwei.like.yunifang.fragment.HomeFragment;
 import com.bwei.like.yunifang.fragment.MineFragment;
 import com.bwei.like.yunifang.utils.CommonUtils;
+import com.bwei.like.yunifang.utils.LogUtils;
 import com.bwei.like.yunifang.view.NoScrollViewPager;
 import com.bwei.like.yunifang.view.ShowingPage;
 import com.zhy.autolayout.AutoLayoutActivity;
@@ -41,6 +42,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RadioButton rb_home_page, rb_category_page, rb_cart_page, rb_mine_page;
     private FragmentManager supportFragmentManager;
     private long mExitTime = 0;
+    private int position = 0;
+
+    public RadioGroup getMain_radioGroup() {
+        return main_radioGroup;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +54,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         initView();
         supportFragmentManager = getSupportFragmentManager();
-        addFragment(new HomeFragment(),"homeFragment");
+        addFragment(new HomeFragment(), "homeFragment");
     }
 
     private void initView() {
-      //  main_viewPager = (NoScrollViewPager) findViewById(R.id.main_viewPager);
+        //  main_viewPager = (NoScrollViewPager) findViewById(R.id.main_viewPager);
         main_radioGroup = (RadioGroup) findViewById(R.id.main_radioGroup);
         main_frameLayout = (FrameLayout) findViewById(R.id.main_frameLayout);
 
@@ -108,27 +114,49 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rb_home_page:
+                position = 0;
                 addFragment(new HomeFragment(), "homeFragment");
                 break;
 
             case R.id.rb_category_page:
+                position = 1;
                 addFragment(new CategoryFragment(), "categoryFragment");
                 break;
 
             case R.id.rb_cart_page:
+                if (MyApplication.loginFlag) {
                     addFragment(new CartFragment(), "cartFragment");
-//                if (MyApplication.loginFlag){
-//                }else {
-//                    Intent intent = new Intent(MainActivity.this, Login_Activity.class);
-//                    startActivity(intent);
-//                    MainActivity.this.overridePendingTransition(R.anim.login_in,R.anim.login_in0);
-//                }
+                } else {
+                    Intent intent = new Intent(MainActivity.this, Login_Activity.class);
+                    startActivityForResult(intent,100);
+                    MainActivity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+                    if (position == 0){
+                        addFragment(new HomeFragment(), "homeFragment");
+                        rb_home_page.setChecked(true);
+                    }else if (position == 1){
+                        addFragment(new CategoryFragment(), "categoryFragment");
+                        rb_category_page.setChecked(true);
+                    }else if (position == 3){
+                        addFragment(new MineFragment(), "mineFragment");
+                        rb_mine_page.setChecked(true);
+                    }
+                }
 
                 break;
 
             case R.id.rb_mine_page:
+                position = 3;
                 addFragment(new MineFragment(), "mineFragment");
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == 101){
+            addFragment(new CartFragment(), "cartFragment");
+            rb_cart_page.setChecked(true);
         }
     }
 

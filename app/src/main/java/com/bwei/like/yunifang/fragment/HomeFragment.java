@@ -322,7 +322,7 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
                     //每日签到
                     case 0:
                         if (MyApplication.loginFlag) {
-
+                            intentJump("ad5",homeRoot.data.ad5.get(position));
                         } else {
                             bottomwindow(view);
                             showPopupWidow();
@@ -499,8 +499,6 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
         @Override
         public void setResultData(String resultData) {
             HomeFragment.this.data = resultData;
-
-
             //解析gson
             Gson gson = new Gson();
             homeRoot = gson.fromJson(data, HomeRoot.class);
@@ -515,7 +513,9 @@ public class HomeFragment extends BaseFragment implements SpringView.OnFreshList
 
     @Override
     public void onRefresh() {
-
+        MyBaseData myBaseData = new MyBaseData();
+        myBaseData.getData(UrlUtils.HOME_URL, UrlUtils.HOME_ARGS, 1, BaseDataxUtils.NORMALTIME);
+        lode();
     }
 
     @Override

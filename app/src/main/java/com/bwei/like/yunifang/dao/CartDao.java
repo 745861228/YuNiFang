@@ -27,7 +27,6 @@ public class CartDao {
         SQLiteDatabase db = mySqliteOpenHelper.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("select * from cart where goods_name=?",new String[]{goodsBean.goods_name});
-//        Cursor cursor = db.query("cart", new String[]{"goods_name"}, "goods_name=?", new String[]{goodsBean.goods_name}, null, null, null);
         if (cursor.moveToNext()){
             String oldNumber = cursor.getString(cursor.getColumnIndex("number"));
             int newNumber = Integer.parseInt(oldNumber) + number;
@@ -43,6 +42,7 @@ public class CartDao {
             values.put("goods_img", goodsBean.goods_img);
             values.put("show_price", goodsBean.shop_price);
             values.put("number", number + "");
+            values.put("restrict_purchase_num",goodsBean.restrict_purchase_num);
             db.insert("cart", null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -65,7 +65,8 @@ public class CartDao {
             String goods_img = cursor.getString(cursor.getColumnIndex("goods_img"));
             String number = cursor.getString(cursor.getColumnIndex("number"));
             String show_price = cursor.getString(cursor.getColumnIndex("show_price"));
-            arrayList.add(new CartDbBean(goods_img,name,id,number,show_price));
+            int restrict_purchase_num = cursor.getInt(cursor.getColumnIndex("restrict_purchase_num"));
+            arrayList.add(new CartDbBean(goods_img,name,id,number,show_price,restrict_purchase_num));
         }
         return arrayList;
     }
@@ -74,9 +75,9 @@ public class CartDao {
     /**
      * 删除数据
      */
-    public void deleteGoods(String goods_name){
+    public void deleteGoods(String _id){
         SQLiteDatabase db = mySqliteOpenHelper.getReadableDatabase();
-        db.delete("cart","goods_name=?",new String[]{goods_name});
+        db.delete("cart","_id=?",new String[]{_id});
         db.close();
     }
 
@@ -88,5 +89,6 @@ public class CartDao {
         ContentValues values = new ContentValues();
         values.put("number",number);
         db.update("cart",values,"goods_name=?",new String[]{goods_name});
+        db.close();
     }
 }

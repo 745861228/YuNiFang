@@ -42,7 +42,7 @@ public class Ad5WebView_Activity extends BaseActivity implements View.OnClickLis
             ad5_webView.loadUrl(ad5.ad_type_dynamic_data);
         }else if (ad1Bean!=null){
             include_middle_tv.setText("御泥坊商城");
-            ad5_webView.loadUrl(ad1Bean.ad_type_dynamic_data);
+            ad5_webView.loadUrl(ad1Bean.ad_type_dynamic);
 
             //优惠活动展示数据
         }else if (activityInfoListBean!=null){

@@ -30,9 +30,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bwei.like.yunifang.MainActivity;
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
+import com.bwei.like.yunifang.application.MyApplication;
 import com.bwei.like.yunifang.base.BaseActivity;
 import com.bwei.like.yunifang.base.BaseDataxUtils;
 import com.bwei.like.yunifang.bean.CartDbBean;
@@ -53,6 +55,9 @@ import com.bwei.like.yunifang.view.MyScrollView;
 import com.bwei.like.yunifang.view.ShowingPage;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import java.lang.reflect.Array;
@@ -99,6 +104,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private PopupWindow popupWindow;
     private int defaultShowNumber = 1;
     private boolean isFlag = true;
+    private boolean showPop;
 
     Handler mHandler = new Handler() {
         @Override
@@ -119,6 +125,12 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private TextView pop_stock_number;
     private TextView pop_restrict_purchase_num;
     private CartDao cartDao;
+    private Button share_wxchat;
+    private Button share_wxsession;
+    private Button share_qzone;
+    private Button share_weibo;
+    private Button share_qq;
+    private Button but_cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,6 +255,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
         include_share_image.setVisibility(View.VISIBLE);
         include_image_goods_shopping_cart = (ImageView) findViewById(R.id.include_image_goods_shopping_cart);
         include_image_goods_shopping_cart.setVisibility(View.VISIBLE);
+        include_image_goods_shopping_cart.setOnClickListener(this);
         include_back_image.setOnClickListener(this);
         include_share_image.setOnClickListener(this);
         include_image_goods_shopping_cart.setOnClickListener(this);
@@ -326,12 +339,20 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
 
             //分享图标
             case R.id.include_share_image:
-
+                showPop = true;
+                bottomwindow(v);
+                showPopupWidow();
                 break;
 
             //购物车图标
             case R.id.include_image_goods_shopping_cart:
-
+                if (MyApplication.loginFlag) {
+                    startActivity(new Intent(Particulars_Activity.this, CartActivity.class));
+                    Particulars_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+                } else {
+                    startActivity(new Intent(Particulars_Activity.this, Login_Activity.class));
+                    Particulars_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+                }
                 break;
 
             //产品详情
@@ -366,14 +387,25 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                 break;
             //加入购物车
             case R.id.but_add_shopCart:
-                bottomwindow(v);
-                showPopupWidow();
+                if (MyApplication.loginFlag) {
+                    showPop = false;
+                    bottomwindow(v);
+                    showPopupWidow();
+                } else {
+                    startActivity(new Intent(Particulars_Activity.this, Login_Activity.class));
+                    Particulars_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+                }
                 break;
             //立即购买
             case R.id.but_buy:
-                isFlag = false;
-                bottomwindow(v);
-                showPopupWidow();
+                if (MyApplication.loginFlag) {
+                    showPop = false;
+                    bottomwindow(v);
+                    showPopupWidow();
+                } else {
+                    startActivity(new Intent(Particulars_Activity.this, Login_Activity.class));
+                    Particulars_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
+                }
                 break;
 
             //减少数量
@@ -404,13 +436,27 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
             //确定按钮
             case R.id.cart_pop_sure_button:
                 //表示加入购物车操作
-                if (isFlag){
+                if (isFlag) {
                     ParticularsRoot.DataBean.GoodsBean goods = particularsRoot.data.goods;
-                    cartDao.addGoods(goods,defaultShowNumber);
+                    cartDao.addGoods(goods, defaultShowNumber);
+                    popupWindow.dismiss();
                     Toast.makeText(Particulars_Activity.this, "恭喜添加购物车成功！", Toast.LENGTH_SHORT).show();
-                }else {     //表示立即购买操作
+                } else {     //表示立即购买操作
 
                 }
+                break;
+
+            //QQ分享监听
+            case R.id.share_qq:
+                new ShareAction(Particulars_Activity.this).setPlatform(SHARE_MEDIA.QQ)
+                        .withText("hello")
+                        .setCallback(umShareListener)
+                        .share();
+                break;
+
+            //分享弹出框中的取消按钮监听事件
+            case R.id.but_cancel:
+                popupWindow.dismiss();
                 break;
         }
     }
@@ -445,8 +491,15 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
         if (popupWindow != null && popupWindow.isShowing()) {
             return;
         }
-        View inflate = CommonUtils.inflate(R.layout.cart_pop);
-        initPopupWindowView(inflate);
+        View inflate = null;
+        if (showPop) {
+            inflate = CommonUtils.inflate(R.layout.pop_share);
+            initSharePopupWindowView(inflate);
+        } else {
+            inflate = CommonUtils.inflate(R.layout.cart_pop);
+            initPopupWindowView(inflate);
+        }
+        showPop = !showPop;
         popupWindow = new PopupWindow(inflate,
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -466,6 +519,32 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
             }
         });
         backgroundAlpha(1f);
+    }
+
+    /**
+     * 分享的popup控件初始化
+     *
+     * @param inflate
+     */
+    private void initSharePopupWindowView(View inflate) {
+        share_wxchat = (Button) inflate.findViewById(R.id.share_wxchat);
+        share_wxchat.setOnClickListener(this);
+
+        share_wxsession = (Button) inflate.findViewById(R.id.share_wxsession);
+        share_wxsession.setOnClickListener(this);
+
+        share_qzone = (Button) inflate.findViewById(R.id.share_qzone);
+        share_qzone.setOnClickListener(this);
+
+        share_weibo = (Button) inflate.findViewById(R.id.share_weibo);
+        share_weibo.setOnClickListener(this);
+
+        share_qq = (Button) inflate.findViewById(R.id.share_qq);
+        share_qq.setOnClickListener(this);
+
+        but_cancel = (Button) inflate.findViewById(R.id.but_cancel);
+        but_cancel.setOnClickListener(this);
+
     }
 
     /**
@@ -535,4 +614,33 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
         getWindow().setAttributes(lp);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
     }
+
+    /**
+     *
+     */
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat","platform"+platform);
+
+            Toast.makeText(Particulars_Activity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(Particulars_Activity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            if(t!=null){
+                Log.d("throw","throw:"+t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(Particulars_Activity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
 }
+

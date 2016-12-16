@@ -2,61 +2,112 @@
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F9F9F9">
+    android:background="#F9F9F9"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/include"
         layout="@layout/inclued_top" />
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:id="@+id/cart_linearLayout"
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/cart_lv_relattiveLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:layout_below="@id/include">
 
-        <LinearLayout
-            android:layout_width="0px"
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/cart_linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/all_select_cb"
+            <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:button="@null"
-                android:drawableLeft="@drawable/cart_cb_selector"
-                android:text="全选"
-                android:textColor="#000"
-                android:layout_marginLeft="20px"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/cart_sumMoney_tv"
+                <CheckBox
+                    android:id="@+id/all_select_cb"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20px"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/cart_cb_selector"
+                    android:text="全选"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:id="@+id/cart_sumMoney_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总计 : ￥0.00"
+                    android:textColor="@color/YuniFangZhangHao_textColor"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/pay_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总计 : ￥0.00"
-                android:textColor="@color/YuniFangZhangHao_textColor"
-                android:textSize="20sp" />
-        </LinearLayout>
+                android:background="@drawable/shape_cart_sure_popup"
+                android:text="结算"
+                android:textColor="#fff" />
+        </com.zhy.autolayout.AutoLinearLayout>
 
-        <Button
-            android:id="@+id/pay_button"
+        <ListView
+            android:id="@+id/cart_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/cart_linearLayout" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/car_rela_noShop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/include">
+
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_cart_sure_popup"
-            android:text="结算"
-            android:textColor="#fff" />
-    </com.zhy.autolayout.AutoLinearLayout>
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/cart_listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/cart_linearLayout"
-        android:layout_below="@id/include" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/shopping_trolley_empty" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20px"
+                android:gravity="center_horizontal"
+                android:text="购物车还是空的哦" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="快去逛逛吧" />
+
+            <Button
+                android:id="@+id/noshop_btn"
+                android:layout_width="300px"
+                android:layout_height="80px"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20px"
+                android:background="@color/YuniFangZhangHao_textColor"
+                android:text="逛一逛"
+                android:textColor="#fff" />
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoRelativeLayout>

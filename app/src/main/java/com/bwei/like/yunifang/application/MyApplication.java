@@ -5,7 +5,10 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Process;
 
+import com.bwei.like.yunifang.utils.CommonUtils;
 import com.bwei.like.yunifang.utils.ImageLoaderUtils;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.xutils.x;
@@ -39,7 +42,17 @@ public class MyApplication extends Application {
         x.Ext.init(this);
         //设置degbug模式
         x.Ext.setDebug(true);
+        //umeng
+        UMShareAPI.get(this);
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+
+        //获取当前是否为登陆状态
+        loginFlag = CommonUtils.getBoolean("loginFlag");
     }
+
+
 
     public static int getMainThreadId(){
         return mainThreadId;

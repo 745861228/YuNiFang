@@ -1,10 +1,12 @@
 package com.bwei.like.yunifang.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +20,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bwei.like.yunifang.MainActivity;
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
+import com.bwei.like.yunifang.application.MyApplication;
 import com.bwei.like.yunifang.base.BaseActivity;
 import com.bwei.like.yunifang.bean.VersionInfo;
 import com.bwei.like.yunifang.utils.CommonUtils;
@@ -44,6 +48,7 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
     private File cacheDir;
     private boolean isLaster = false;
     private VersionInfo versionInfo;
+    private AlertDialog alertDialog;
 
 
     @Override
@@ -62,8 +67,6 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
      */
     private void initDatas() {
         user_Setting_listview.setAdapter(new MyAdapater());
-
-
     }
 
 
@@ -86,10 +89,41 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
                 UserSeting_Activity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
                 break;
 
+            /**
+             * 退出的操作
+             */
             case R.id.out_login:
-
+                userOutAppButton();
                 break;
         }
+    }
+
+    /**
+     * 用户退出程序，并清除数据
+     */
+    private void userOutAppButton() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserSeting_Activity.this);
+        builder.setMessage("确认退出吗？");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //清除sp
+                CommonUtils.clearSp();
+                alertDialog.dismiss();
+                MyApplication.loginFlag = false;
+                CommonUtils.saveBolean("loginFlag",MyApplication.loginFlag);
+            }
+        });
+
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
 
@@ -149,7 +183,7 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
             if (itemStr[position].equals("检查更新")) {
                 next_icon.setVisibility(View.GONE);
                 user_setting_right_tv.setVisibility(View.VISIBLE);
-
+                user_setting_right_tv.setText("您当前已经是最新版本");
                 //获取服务器版本信息
                 getVersionCode(user_setting_right_tv);
             }
@@ -185,10 +219,17 @@ public class UserSeting_Activity extends BaseActivity implements View.OnClickLis
                         }
                     }
 
-                    if (itemStr[position].equals("关于我们")){
-                        startActivity(new Intent(UserSeting_Activity.this,ZXingActivity.class));
+                    if (itemStr[position].equals("关于我们")) {
+                        startActivity(new Intent(UserSeting_Activity.this, ZXingActivity.class));
                         UserSeting_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
                         Toast.makeText(UserSeting_Activity.this, "点击了关于我们", Toast.LENGTH_SHORT).show();
+                    }
+
+                    if (itemStr[position].equals("拨打电话")) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + "400-688-0900"));
+                        startActivity(intent);
                     }
                 }
             });

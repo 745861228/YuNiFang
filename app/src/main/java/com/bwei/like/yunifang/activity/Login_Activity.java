@@ -1,5 +1,6 @@
 package com.bwei.like.yunifang.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,13 +14,23 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bwei.like.yunifang.MainActivity;
 import com.bwei.like.yunifang.R;
+import com.bwei.like.yunifang.application.MyApplication;
 import com.bwei.like.yunifang.base.BaseActivity;
+import com.bwei.like.yunifang.utils.CommonUtils;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
 
 public class Login_Activity extends BaseActivity implements View.OnClickListener {
 
@@ -30,7 +41,6 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
     private EditText login_phone_ed;
     private EditText login_password_ed;
     private TextView login_remember_password_tv;
-    private Button login_but;
     private TextView login_othrt_tv;
     private LinearLayout login_LinearLayout_getCode;
     private PopupWindow popupWindow;
@@ -45,6 +55,7 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
         }
     };
     private TextView login_login_tv;
+    private Button login_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +83,10 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
         login_password_ed = (EditText) findViewById(R.id.login_password_ed);
         login_remember_password_tv = (TextView) findViewById(R.id.login_remeber_password);
         login_remember_password_tv.setOnClickListener(this);
-        login_but = (Button) findViewById(R.id.login_but);
-        login_but.setOnClickListener(this);
-        login_but.setBackgroundColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
+        login_button = (Button) findViewById(R.id.login_button);
+        login_button.setBackgroundColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
+        login_button.setOnClickListener(this);
+
         login_othrt_tv = (TextView) findViewById(R.id.login_other_tv);
         login_othrt_tv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         login_othrt_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
@@ -87,7 +99,8 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             //注册
             case R.id.include_right_tv:
-
+                startActivity(new Intent(Login_Activity.this,RegisterActivity.class));
+                Login_Activity.this.overridePendingTransition(R.anim.login_in,R.anim.login_in0);
                 break;
 
             //返回图片
@@ -123,14 +136,27 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
                 break;
 
             //登陆按钮
-            case R.id.login_but:
-
+            case R.id.login_button:
+                Toast.makeText(Login_Activity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                MyApplication.loginFlag = true;
+                CommonUtils.saveBolean("loginFlag",MyApplication.loginFlag);
+                Login_Activity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
+                Intent intent = getIntent();
+                setResult(101,intent);
+                finish();
                 break;
 
             //第三方登陆
             case R.id.login_other_tv:
                 bottomwindow(v);
                 showPopupWidow();
+                break;
+            //QQ登陆按钮
+            case R.id.qq_land:
+                UMShareAPI mShareAPI = UMShareAPI.get(Login_Activity.this);
+                //  mShareAPI.doOauthVerify(Login_Activity.this, SHARE_MEDIA.QQ, umAuthListener);
+                mShareAPI.getPlatformInfo(Login_Activity.this, SHARE_MEDIA.QQ, umAuthListener);
+                popupWindow.dismiss();
                 break;
 
         }
@@ -188,12 +214,15 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
         backgroundAlpha(1f);
     }
 
+
     /**
      * //设置窗口内可点击事件
+     *
      * @param layout
      */
     private void windowClickListener(LinearLayout layout) {
-
+        ImageButton qq_land = (ImageButton) layout.findViewById(R.id.qq_land);
+        qq_land.setOnClickListener(this);
     }
 
     private void hidePopupWindow() {
@@ -226,5 +255,37 @@ public class Login_Activity extends BaseActivity implements View.OnClickListener
         getWindow().setAttributes(lp);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText(Login_Activity.this, "登陆成功" , Toast.LENGTH_SHORT).show();
+            CommonUtils.saveString("screen_name",data.get("screen_name"));
+            CommonUtils.saveString("profile_image_url",data.get("profile_image_url"));
+            MyApplication.loginFlag = true;
+            CommonUtils.saveBolean("loginFlag",MyApplication.loginFlag);
+            Login_Activity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
+            Intent intent = getIntent();
+            setResult(101,intent);
+            Login_Activity.this.finish();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(getApplicationContext(), "Authorize fail", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(getApplicationContext(), "Authorize cancel", Toast.LENGTH_SHORT).show();
+        }
+    };
 
 }

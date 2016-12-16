@@ -39,7 +39,6 @@ public class UserImageView extends ImageView{
      */
     @Override
     protected void onDraw(Canvas canvas) {
-
         Drawable drawable = getDrawable();
         if (null != drawable) {
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
@@ -48,7 +47,6 @@ public class UserImageView extends ImageView{
             final Rect rectDest = new Rect(0,0,getWidth(),getHeight());
             paint.reset();
             canvas.drawBitmap(b, rectSrc, rectDest, paint);
-
         } else {
             super.onDraw(canvas);
         }
@@ -79,8 +77,6 @@ public class UserImageView extends ImageView{
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
-
-
     }
 }
 

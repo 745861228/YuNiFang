@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#fff">
 
     <include
         android:id="@+id/particulas_include"
@@ -108,7 +109,7 @@
                 <com.bwei.like.yunifang.view.MyRoolViewPager
                     android:id="@+id/particulars_myRoolViewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="200px" />
+                    android:layout_height="500px" />
 
                 <com.zhy.autolayout.AutoLinearLayout
                     android:id="@+id/particulars_docs_linearLayout"

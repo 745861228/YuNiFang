@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="30px"
+        android:text="选择分享方式"
+        android:textColor="@color/YuniFangZhangHao_textColor"
+        android:textSize="36px" />
+
+
+    <!--分享平台-->
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15px">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/share_wxchat"
+                android:textColor="#000"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:drawableTop="@mipmap/share_wxchat"
+                android:gravity="center"
+                android:padding="15px"
+                android:text="微信好友" />
+
+            <Button
+                android:textColor="#000"
+                android:id="@+id/share_wxsession"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:drawableTop="@mipmap/share_wxsession"
+                android:gravity="center"
+                android:padding="15px"
+                android:text="朋友圈" />
+
+            <Button
+                android:textColor="#000"
+                android:id="@+id/share_qzone"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:drawableTop="@mipmap/share_qzone"
+                android:gravity="center"
+                android:padding="15px"
+                android:text="QQ空间" />
+
+            <Button
+                android:textColor="#000"
+                android:id="@+id/share_weibo"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:drawableTop="@mipmap/share_weibo"
+                android:gravity="center"
+                android:padding="15px"
+                android:text="微博" />
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:textColor="#000"
+                android:id="@+id/share_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#00000000"
+                android:drawableTop="@mipmap/share_qq"
+                android:gravity="center"
+                android:padding="15px"
+                android:text="QQ好友" />
+
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#66666666" />
+
+    <Button
+        android:id="@+id/but_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:text="取消"
+        android:textColor="@color/colorAccent" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>
