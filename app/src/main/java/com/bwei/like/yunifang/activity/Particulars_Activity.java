@@ -387,6 +387,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                 break;
             //加入购物车
             case R.id.but_add_shopCart:
+                isFlag = true;
                 if (MyApplication.loginFlag) {
                     showPop = false;
                     bottomwindow(v);
@@ -398,6 +399,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                 break;
             //立即购买
             case R.id.but_buy:
+                isFlag = false;
                 if (MyApplication.loginFlag) {
                     showPop = false;
                     bottomwindow(v);
@@ -441,8 +443,14 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                     cartDao.addGoods(goods, defaultShowNumber);
                     popupWindow.dismiss();
                     Toast.makeText(Particulars_Activity.this, "恭喜添加购物车成功！", Toast.LENGTH_SHORT).show();
-                } else {     //表示立即购买操作
-
+                } else {//表示立即购买操作
+                    ParticularsRoot.DataBean.GoodsBean goods = particularsRoot.data.goods;
+                    Intent intent = new Intent(Particulars_Activity.this, OrderParticularsActivity.class);
+                    ArrayList<CartDbBean> arrayList = new ArrayList<>();
+                    arrayList.add(new CartDbBean(goods.goods_img,goods.goods_name,goods.id,defaultShowNumber+"",goods.shop_price+"",goods.restrict_purchase_num));
+                    intent.putExtra("arrayList",arrayList);
+                    Particulars_Activity.this.startActivity(intent);
+                    Particulars_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
                 }
                 break;
 

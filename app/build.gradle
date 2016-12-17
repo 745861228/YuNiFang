@@ -37,6 +37,7 @@ dependencies {
     compile files('libs/zxing.jar')
     compile files('libs/umeng_social_api.jar')
     compile files('libs/mta-sdk-1.6.2.jar')
+    compile files('libs/alipaySdk-20160825.jar')
 }
 
 allprojects {

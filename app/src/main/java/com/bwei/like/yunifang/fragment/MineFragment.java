@@ -66,7 +66,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             //用户设置界面
             case R.id.user_setting:
                 intentActivity(UserSeting_Activity.class);
@@ -80,8 +80,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void intentActivity(Class c) {
-        startActivity(new Intent(getActivity(),c));
-        getActivity().overridePendingTransition(R.anim.login_in,R.anim.login_in0);
+        startActivity(new Intent(getActivity(), c));
+        getActivity().overridePendingTransition(R.anim.login_in, R.anim.login_in0);
     }
 
     @Override
@@ -95,13 +95,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
      * 初始化用户信息
      */
     private void initUserMessage() {
-        if (MyApplication.loginFlag){
+        if (MyApplication.loginFlag) {
             String screen_name = CommonUtils.getString("screen_name");
             String profile_image_url = CommonUtils.getString("profile_image_url");
-                user_name_tv.setVisibility(View.VISIBLE);
-                user_icon_image.setVisibility(View.VISIBLE);
-                ImageLoader.getInstance().displayImage(profile_image_url,user_icon_image, ImageLoaderUtils.initOptions());
-                user_name_tv.setText(screen_name);
+            user_name_tv.setVisibility(View.VISIBLE);
+            user_icon_image.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(profile_image_url, user_icon_image, ImageLoaderUtils.initOptions());
+            user_name_tv.setText(screen_name);
+            default_uset_image.setVisibility(View.GONE);
         } else {
             user_name_tv.setVisibility(View.GONE);
             user_icon_image.setVisibility(View.GONE);

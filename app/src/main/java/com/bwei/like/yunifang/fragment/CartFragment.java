@@ -109,9 +109,6 @@ public class CartFragment extends BaseFragment implements View.OnClickListener {
                 supportFragmentManager.popBackStack("homeFragment",0);
                 break;
 
-//            case R.id.pay_button:
-//                setCurrentView();
-//                break;
         }
     }
 }

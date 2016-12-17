@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/indent_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:id="@+id/indent_pay_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="实付：￥0.0"
+            android:textColor="@color/YuniFangZhangHao_textColor" />
+
+        <Button
+            android:id="@+id/pay_button"
+            android:layout_width="wrap_content"
+            android:layout_height="80px"
+            android:layout_gravity="center_vertical"
+            android:background="@color/YuniFangZhangHao_textColor"
+            android:onClick="indentPay"
+            android:gravity="center"
+            android:text="付款"
+            android:textColor="#fff" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/indent_bottom_line"
+        android:orientation="vertical">
+
+        <include layout="@layout/inclued_top" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="10px"
+                android:paddingRight="10px">
+
+                <TextView
+                    android:id="@+id/indent_address_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:drawableLeft="@mipmap/address"
+                    android:gravity="center_vertical"
+                    android:text="  请填写收货地址"
+                    android:textColor="#000" />
+
+                <com.bwei.like.yunifang.view.Home_ListView
+                    android:id="@+id/indent_goods_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="#000000"
+                    android:dividerHeight="1px" >
+
+                </com.bwei.like.yunifang.view.Home_ListView>
+
+                <TextView
+                    android:id="@+id/indent_goods_args_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical|right"
+                    android:text="共计1件商品  总计：￥0.01"
+                    android:textColor="#000" />
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_marginTop="10px"
+                    android:layout_width="match_parent"
+                    android:layout_height="80px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="配送方式"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/next_icon"
+                        android:gravity="center_vertical"
+                        android:text="包邮 "
+                        android:textColor="#000" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_marginTop="10px"
+                    android:layout_width="match_parent"
+                    android:layout_height="80px">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="满赠：可选赠品8件"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:drawableRight="@mipmap/next_icon"
+                        android:gravity="center_vertical"
+                        android:text="未选择 "
+                        android:textColor="@color/YuniFangZhangHao_textColor" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="200px"
+                    android:layout_marginTop="30px"
+                    android:background="@drawable/share_square"
+                    android:gravity="top"
+                    android:hint="给卖家留言..."
+                    android:lines="5"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20px"
+                    android:layout_marginTop="50px"
+                    android:text="支付方式"
+                    android:textColor="#000" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200px">
+
+                    <RadioGroup
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <RadioButton
+                            android:id="@+id/indent_rb_ali"
+                            android:drawableLeft="@mipmap/icon_alipay"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="   支付宝"
+                            android:button="@null"
+                            android:textColor="#000"
+                            android:checked="true"
+                            android:drawableRight="@drawable/cart_cb_selector"
+                            android:gravity="center_vertical" />
+
+                        <RadioButton
+                            android:textColor="#000"
+                            android:id="@+id/indent_rb_wx"
+                            android:text="   微信支付"
+                            android:drawableLeft="@mipmap/icon_wxpay"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:button="@null"
+                            android:drawableRight="@drawable/cart_cb_selector"
+                            android:gravity="center_vertical" />
+                    </RadioGroup>
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.zhy.autolayout.AutoLinearLayout>
+        </ScrollView>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoRelativeLayout>

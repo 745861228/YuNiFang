@@ -1,9 +1,11 @@
 package com.bwei.like.yunifang.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by LiKe on 2016/12/12.
  */
-public class CartDbBean {
+public class CartDbBean implements Serializable{
 
     private String id;
     private String goods_name;

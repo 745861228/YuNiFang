@@ -1,6 +1,7 @@
 package com.bwei.like.yunifang.adapater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bwei.like.yunifang.R;
+import com.bwei.like.yunifang.activity.OrderParticularsActivity;
 import com.bwei.like.yunifang.bean.CartDbBean;
 import com.bwei.like.yunifang.dao.CartDao;
 import com.bwei.like.yunifang.utils.CommonUtils;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 /**
  * Created by LiKe on 2016/12/13.
  */
-public class CartlvAdapater extends BaseAdapter implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class CartlvAdapater extends BaseAdapter implements View.OnClickListener{
 
     private  AutoRelativeLayout car_rela_noShop;
     private  AutoRelativeLayout cart_lv_relattiveLayout;
@@ -57,7 +59,6 @@ public class CartlvAdapater extends BaseAdapter implements View.OnClickListener,
         this.cart_lv_relattiveLayout = cart_lv_relattiveLayout;
         this.car_rela_noShop = car_rela_noShop;
         all_select_cb.setOnClickListener(this);
-        all_select_cb.setOnCheckedChangeListener(this);
         include_right_tv.setOnClickListener(this);
         pay_button.setOnClickListener(this);
         cartDao = new CartDao(context);
@@ -238,6 +239,19 @@ public class CartlvAdapater extends BaseAdapter implements View.OnClickListener,
 
                 //结算
                 if (isFlag) {
+                    if (tag == 0){
+                        Toast.makeText(context, "您还没有选中任何商品哦", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Intent intent = new Intent(context, OrderParticularsActivity.class);
+                        ArrayList<CartDbBean> arrayList = new ArrayList<>();
+                        for (int i = 0; i < cartDbBeenList.size(); i++) {
+                            if (cartDbBeenList.get(i).isChecked()){
+                                arrayList.add(cartDbBeenList.get(i));
+                            }
+                        }
+                        intent.putExtra("arrayList",arrayList);
+                        context.startActivity(intent);
+                    }
 
                 } else {     //删除操作
                     for (int i = cartDbBeenList.size()-1; i >=0 ; i--) {
@@ -262,20 +276,7 @@ public class CartlvAdapater extends BaseAdapter implements View.OnClickListener,
 
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//        if (buttonView.getId() == all_select_cb.getId()){
-//            if (!isChecked){
-//                for (int i = 0; i < cartDbBeenList.size(); i++) {
-//                    cartDbBeenList.get(i).setChecked(false);
-//                }
-//                all_select_cb.setText("全选");
-//                sumMoney = 0;
-//                cart_sumMoney_tv.setText("总计:￥" + sumMoney);
-//            }
-//            notifyDataSetChanged();
-//        }
-    }
+
 
     public class ViewHolder {
         public final CheckBox cartallcheckitem;
