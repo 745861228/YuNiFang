@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/inclued_top"
+        android:id="@+id/include_"/>
+
+
+    <Button
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:background="@color/YuniFangZhangHao_textColor"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="添加收货地址"
+        android:textColor="#fff"
+        android:id="@+id/addAddress_but"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView_listview"
+        android:layout_below="@id/include_"
+        android:layout_above="@id/addAddress_but"/>
+
+</com.zhy.autolayout.AutoRelativeLayout>

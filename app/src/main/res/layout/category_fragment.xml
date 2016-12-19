@@ -125,13 +125,15 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10px"
                     android:gravity="center"
-                    android:text="- 按功效 -" />
+                    android:text="- 按功效 -"
+                    android:textColor="#000"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="魅力从选对产品开始" />
+                    android:text="魅力从选对产品开始"
+                    android:textColor="#000"/>
 
                 <com.zhy.autolayout.AutoLinearLayout
                     android:id="@+id/cateGory_childDrem"
@@ -154,13 +156,15 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10px"
                     android:gravity="center"
-                    android:text="- 按肤质 -" />
+                    android:text="- 按肤质 -"
+                    android:textColor="#000"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="适合自己的才是最好" />
+                    android:text="适合自己的才是最好"
+                    android:textColor="#000"/>
                 <!--    按肤质   -->
 
                 <com.bwei.like.yunifang.view.Home_GridView
@@ -187,7 +191,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="40px"
-                        android:text="- 明星产品 -" />
+                        android:text="- 明星产品 -"
+                        android:textColor="#000"/>
 
                 </com.zhy.autolayout.AutoRelativeLayout>
 

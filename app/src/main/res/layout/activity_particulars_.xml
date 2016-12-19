@@ -8,35 +8,6 @@
         android:id="@+id/particulas_include"
         layout="@layout/inclued_top" />
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:id="@+id/search01"
-        android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:layout_below="@id/particulas_include"
-        android:background="#EEEEEE"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="产品详情" />
-
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="产品参数" />
-
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="评论" />
-    </com.zhy.autolayout.AutoLinearLayout>
 
     <!--  底部 加入购物车  -->
     <com.zhy.autolayout.AutoLinearLayout
@@ -267,4 +238,36 @@
         </com.zhy.autolayout.AutoLinearLayout>
     </com.bwei.like.yunifang.view.MyScrollView>
 
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/search01"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_below="@id/particulas_include"
+        android:background="#EEEEEE"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/pro_detail_top_tv"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="产品详情" />
+
+        <TextView
+            android:id="@+id/pro_details_top_tv"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="产品参数" />
+
+        <TextView
+            android:id="@+id/pro_comment_top_tv"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="评论" />
+    </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoRelativeLayout>

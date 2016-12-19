@@ -19,4 +19,13 @@
         <item name="android:windowEnterAnimation">@anim/window_out</item>
         <item name="android:windowExitAnimation">@anim/window_back</item>
     </style>
+
+    <style name="progressbar_style1">
+        <item name="android:maxWidth">50.0dip</item>
+        <item name="android:maxHeight">50.0dip</item>
+        <item name="android:indeterminateDrawable">@anim/loading_animation</item>
+        <item name="android:minWidth">50.0dip</item>
+        <item name="android:minHeight">50.0dip</item>
+    </style>
+
 </resources>

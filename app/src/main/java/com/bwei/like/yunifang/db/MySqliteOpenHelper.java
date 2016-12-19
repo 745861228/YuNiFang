@@ -17,6 +17,9 @@ public class MySqliteOpenHelper extends SQLiteOpenHelper {
 
         //创建购物车表
         db.execSQL("create table cart (id integer primary key autoincrement,_id varchar(50),goods_name varchar(100),goods_img varchar(100),show_price varchar(50),number varchar(20),restrict_purchase_num int)");
+
+        //创建收货地址表
+        db.execSQL("create table address (id integer primary key autoincrement,userName varchar(50),userPhone varchar(50),userAddress varchar(100))");
     }
 
     @Override

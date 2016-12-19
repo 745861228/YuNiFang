@@ -155,4 +155,23 @@ public class CommonUtils {
         edit.clear();
         edit.commit();
     }
+
+    //保存String
+    public static void saveInt(String str, int flag) {
+        if (sharedPreferences == null) {
+            sharedPreferences = MyApplication.getContext().getSharedPreferences(SP_NAME, MyApplication.getContext().MODE_PRIVATE);
+        }
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt(str, flag);
+        edit.commit();
+    }
+
+    //获取sp
+    public static int getInt(String str) {
+        if (sharedPreferences == null) {
+            sharedPreferences = MyApplication.getContext().getSharedPreferences(SP_NAME, MyApplication.getContext().MODE_PRIVATE);
+        }
+        return sharedPreferences.getInt(str, 0);
+    }
+
 }

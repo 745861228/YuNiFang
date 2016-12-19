@@ -14,6 +14,7 @@
 
 
     <TextView
+        android:textColor="#000"
         android:id="@+id/createtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/user_icon"
-        android:text="3242" />
+        android:text="3242"
+        android:textColor="@color/YuniFangZhangHao_textColor"/>
 
     <TextView
         android:id="@+id/content"
@@ -34,7 +36,8 @@
         android:layout_below="@id/nick_name"
         android:layout_marginTop="20px"
         android:layout_toRightOf="@id/user_icon"
-        android:text="3242" />
+        android:text="3242"
+        android:textColor="#000"/>
 
     <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/uset_linearLayout"

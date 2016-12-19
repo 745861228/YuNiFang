@@ -93,7 +93,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private ListView list;
     private int searchLayoutTop;
     private RecyclerView particulars_recyclerView;
-    private TextView pro_details_tv;
+    private TextView pro_details_tv, pro_detail_top_tv, pro_details_top_tv, pro_comment_top_tv;
     private TextView pro_detail_tv;
     private TextView pro_comment_tv;
     private GoodsDesc[] goodsBeen;
@@ -131,6 +131,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private Button share_weibo;
     private Button share_qq;
     private Button but_cancel;
+    private ProCommentAdapater proCommentAdapater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +155,6 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private void particularsMyRoolViewPager() {
 
         List<ParticularsRoot.DataBean.GoodsBean.GalleryBean> gallery = particularsRoot.data.goods.gallery;
-        Log.i("kkkkk", "particularsMyRoolViewPager: ....." + gallery.size());
         for (int i = 0; i < gallery.size(); i++) {
             imageUrlList.add(gallery.get(i).normal_url);
         }
@@ -291,6 +291,15 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
         pro_comment_tv.setOnClickListener(this);
 
 
+        //顶部三个按钮控件
+        pro_detail_top_tv = (TextView) findViewById(R.id.pro_detail_top_tv);//产品详情
+        pro_detail_top_tv.setOnClickListener(this);
+        pro_details_top_tv = (TextView) findViewById(R.id.pro_details_top_tv);         //产品参数
+        pro_details_top_tv.setOnClickListener(this);
+        pro_comment_top_tv = (TextView) findViewById(R.id.pro_comment_top_tv);//评论
+        pro_comment_top_tv.setOnClickListener(this);
+
+
         //加入购物车
         but_add_shopCart = (Button) findViewById(R.id.but_add_shopCart);
         but_add_shopCart.setOnClickListener(this);
@@ -313,7 +322,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            searchLayoutTop = search2_LinearLayout.getBottom();//获取searchLayout的顶部位置
+            searchLayoutTop = search2_LinearLayout.getTop();//获取searchLayout的顶部位置
         }
     }
 
@@ -383,8 +392,47 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                 pro_detail_tv.setTextColor(Color.BLACK);
                 pro_comment_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
                 List<ParticularsRoot.DataBean.CommentsBean> comments = particularsRoot.data.comments;
-                particulars_recyclerView.setAdapter(new ProCommentAdapater(comments, Particulars_Activity.this));
+                if (proCommentAdapater == null) {
+                    proCommentAdapater = new ProCommentAdapater(comments, Particulars_Activity.this);
+                }
+                particulars_recyclerView.setAdapter(proCommentAdapater);
                 break;
+
+            //产品详情
+            case R.id.pro_detail_top_tv:
+                pro_detail_top_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
+                pro_details_top_tv.setTextColor(Color.BLACK);
+                pro_comment_top_tv.setTextColor(Color.BLACK);
+
+                if (proDetailAdapater == null) {
+                    proDetailAdapater = new ProDetailAdapater(Particulars_Activity.this, goodsBeen);
+                }
+                particulars_recyclerView.setAdapter(proDetailAdapater);
+                break;
+            //产品参数
+            case R.id.pro_details_top_tv:
+                ArrayList<ParticularsRoot.DataBean.GoodsBean.AttributesBean> attributesTop = (ArrayList<ParticularsRoot.DataBean.GoodsBean.AttributesBean>) particularsRoot.data.goods.attributes;
+                pro_details_top_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
+                pro_detail_top_tv.setTextColor(Color.BLACK);
+                pro_comment_top_tv.setTextColor(Color.BLACK);
+                if (proDetailsAdapater == null) {
+                    proDetailsAdapater = new ProDetailsAdapater(attributesTop, Particulars_Activity.this);
+                }
+                particulars_recyclerView.setAdapter(proDetailsAdapater);
+                break;
+            //评论
+            case R.id.pro_comment_top_tv:
+                pro_details_top_tv.setTextColor(Color.BLACK);
+                pro_detail_top_tv.setTextColor(Color.BLACK);
+                pro_comment_top_tv.setTextColor(getResources().getColor(R.color.YuniFangZhangHao_textColor));
+                List<ParticularsRoot.DataBean.CommentsBean> commentsTop = particularsRoot.data.comments;
+                if (proCommentAdapater == null) {
+                    proCommentAdapater = new ProCommentAdapater(commentsTop, Particulars_Activity.this);
+                }
+                particulars_recyclerView.setAdapter(proCommentAdapater);
+                break;
+
+
             //加入购物车
             case R.id.but_add_shopCart:
                 isFlag = true;
@@ -447,8 +495,8 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
                     ParticularsRoot.DataBean.GoodsBean goods = particularsRoot.data.goods;
                     Intent intent = new Intent(Particulars_Activity.this, OrderParticularsActivity.class);
                     ArrayList<CartDbBean> arrayList = new ArrayList<>();
-                    arrayList.add(new CartDbBean(goods.goods_img,goods.goods_name,goods.id,defaultShowNumber+"",goods.shop_price+"",goods.restrict_purchase_num));
-                    intent.putExtra("arrayList",arrayList);
+                    arrayList.add(new CartDbBean(goods.goods_img, goods.goods_name, goods.id, defaultShowNumber + "", goods.shop_price + "", goods.restrict_purchase_num));
+                    intent.putExtra("arrayList", arrayList);
                     Particulars_Activity.this.startActivity(intent);
                     Particulars_Activity.this.overridePendingTransition(R.anim.login_in, R.anim.login_in0);
                 }
@@ -629,7 +677,7 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Log.d("plat","platform"+platform);
+            Log.d("plat", "platform" + platform);
 
             Toast.makeText(Particulars_Activity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
 
@@ -637,15 +685,15 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(Particulars_Activity.this,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
-            if(t!=null){
-                Log.d("throw","throw:"+t.getMessage());
+            Toast.makeText(Particulars_Activity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
             }
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(Particulars_Activity.this,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Particulars_Activity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
 

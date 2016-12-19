@@ -110,7 +110,8 @@
                         android:layout_height="50px"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="--优惠活动--" />
+                        android:text="--优惠活动--"
+                        android:textColor="#000"/>
 
                     <com.zhy.autolayout.AutoFrameLayout
                         android:layout_width="match_parent"
@@ -145,7 +146,8 @@
                     android:layout_height="50px"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text=" - 热门专题 -" />
+                    android:text=" - 热门专题 -"
+                    android:textColor="#000"/>
 
                 <com.bwei.like.yunifang.view.Home_ListView
                     android:id="@+id/home_homeListView"
@@ -176,7 +178,8 @@
                     android:gravity="center"
                     android:padding="20px"
                     android:text="查看所有商品"
-                    android:id="@+id/selectAll_goods"/>
+                    android:id="@+id/selectAll_goods"
+                    android:textColor="#000"/>
             </com.zhy.autolayout.AutoLinearLayout>
 
         </ScrollView>

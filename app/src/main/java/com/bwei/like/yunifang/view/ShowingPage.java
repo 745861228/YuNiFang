@@ -29,7 +29,7 @@ public abstract class ShowingPage extends FrameLayout implements View.OnClickLis
 
 
     //定义一个初始状态---- 默认当前为未加载状态
-    public int currentState = STATE_UNLOAD;
+    public int currentState = STATE_LOADING;
     private View showingpage_unload;
     private View showingpage_load_error;
     private View showingpage_load_empty;
