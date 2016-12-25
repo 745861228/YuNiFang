@@ -38,11 +38,11 @@
 
 
                 <ImageView
+                    android:id="@+id/default_uset_image"
                     android:layout_width="160px"
                     android:layout_height="160px"
                     android:layout_centerInParent="true"
-                    android:id="@+id/default_uset_image"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/user_name_tv"
@@ -73,6 +73,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/wait_pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -85,6 +86,7 @@
                     android:textSize="20px" />
 
                 <RadioButton
+                    android:id="@+id/wait_send_good"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -97,6 +99,7 @@
                     android:textSize="20px" />
 
                 <RadioButton
+                    android:id="@+id/wait_receive_good"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -109,6 +112,7 @@
                     android:textSize="20px" />
 
                 <RadioButton
+                    android:id="@+id/wait_evaluate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -121,6 +125,7 @@
                     android:textSize="20px" />
 
                 <RadioButton
+                    android:id="@+id/wait_refund"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -15,13 +18,15 @@ import android.widget.TextView;
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.adapater.CommonAdapter;
 import com.bwei.like.yunifang.adapater.ViewHolder;
+import com.bwei.like.yunifang.base.BaseActivity;
 import com.bwei.like.yunifang.bean.AddressBean;
 import com.bwei.like.yunifang.dao.AddressDao;
 import com.bwei.like.yunifang.utils.CommonUtils;
+import com.bwei.like.yunifang.utils.LogUtils;
 
 import java.util.ArrayList;
 
-public class ListAddressActivity extends AppCompatActivity implements View.OnClickListener {
+public class ListAddressActivity extends BaseActivity implements View.OnClickListener {
 
     private ImageView back_image;
     private TextView include_middle_tv;
@@ -41,22 +46,35 @@ public class ListAddressActivity extends AppCompatActivity implements View.OnCli
 
         addressDao = new AddressDao(this);
         addressBeenList = addressDao.selectAll();
+
+        //获取sp中保存的地址信息
+        getSpMessage();
+
+
         commonAdapter = new CommonAdapter<AddressBean>(this, addressBeenList, R.layout.address_listview_item) {
             @Override
             public void convert(ViewHolder helper, final AddressBean item) {
                 helper.setText(R.id.name, item.getUserName());
                 helper.setText(R.id.phone, item.getUserPhone());
                 helper.setText(R.id.address, item.getUserAddress());
-                final RadioButton radioButton = helper.getView(R.id.radioButton);
-                radioButton.setOnClickListener(new View.OnClickListener() {
+                CheckBox checkBox = helper.getView(R.id.radioButton);
+                final int position = helper.getPosition();
+                checkBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (radioButton.isChecked()){
-                            item.setChecked(true);
+                        for (int i = 0; i < addressBeenList.size(); i++) {
+                            if (i == position){
+                                addressBeenList.get(position).setChecked(true);
+                                CommonUtils.saveInt("addressId", addressBeenList.get(position).getId());
+                            }else {
+                                addressBeenList.get(i).setChecked(false);
+                            }
                         }
+                        commonAdapter.notifyDataSetChanged();
                     }
                 });
-                radioButton.setChecked(item.isChecked());
+                Log.i("TAG", helper.getPosition()+"convert: -------------"+item.isChecked());
+                checkBox.setChecked(item.isChecked());
             }
         };
         listView_listview.setAdapter(commonAdapter);
@@ -64,12 +82,33 @@ public class ListAddressActivity extends AppCompatActivity implements View.OnCli
         listView_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CommonUtils.saveInt("addressId",addressBeenList.get(position).getId());
+                CommonUtils.saveInt("addressId", addressBeenList.get(position).getId());
+
+                for (int i = 0; i < addressBeenList.size(); i++) {
+                    addressBeenList.get(i).setChecked(false);
+                }
+                addressBeenList.get(position).setChecked(true);
+                commonAdapter.notifyDataSetChanged();
+
+                LogUtils.i("isChecked*********", addressBeenList.get(position).isChecked() + "****" + position);
                 finish();
                 ListAddressActivity.this.overridePendingTransition(R.anim.login_in0, R.anim.login_out);
             }
         });
     }
+
+    /**
+     *
+     */
+    private void getSpMessage() {
+        int addressId = CommonUtils.getInt("addressId");
+            for (int i = 0; i < addressBeenList.size(); i++) {
+                if (addressBeenList.get(i).getId() == addressId) {
+                    addressBeenList.get(i).setChecked(true);
+                }
+            }
+        }
+
 
     private void initViewListener() {
         back_image.setOnClickListener(this);
@@ -117,5 +156,6 @@ public class ListAddressActivity extends AppCompatActivity implements View.OnCli
         super.onResume();
         addressBeenList = addressDao.selectAll();
         commonAdapter.notifyDataSetChanged();
+        getSpMessage();
     }
 }

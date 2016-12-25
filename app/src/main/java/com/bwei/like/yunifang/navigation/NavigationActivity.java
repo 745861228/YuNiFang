@@ -13,10 +13,11 @@ import android.widget.ImageView;
 
 import com.bwei.like.yunifang.MainActivity;
 import com.bwei.like.yunifang.R;
+import com.bwei.like.yunifang.base.BaseActivity;
 
 import java.util.ArrayList;
 
-public class NavigationActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, Animation.AnimationListener {
+public class NavigationActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, Animation.AnimationListener {
 
     private ViewPager navigation_viewPager;
     private ImageView ico_next_guidance;

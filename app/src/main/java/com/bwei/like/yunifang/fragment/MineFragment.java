@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bwei.like.yunifang.R;
 import com.bwei.like.yunifang.activity.Login_Activity;
+import com.bwei.like.yunifang.activity.MyOrderActivity;
 import com.bwei.like.yunifang.activity.UserSeting_Activity;
 import com.bwei.like.yunifang.application.MyApplication;
 import com.bwei.like.yunifang.base.BaseFragment;
@@ -35,12 +37,30 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ImageView user_icon_image;
     private TextView user_name_tv;
     private ImageView default_uset_image;
+    private RadioButton wait_pay;
+    private RadioButton wait_send_good;
+    private RadioButton wait_receive_good;
+    private RadioButton wait_evaluate;
+    private RadioButton wait_refund;
 
     @Override
     protected View createSuccessView() {
         view = CommonUtils.inflate(R.layout.minefragment_item);
         initView();
+
+        initViewListener();
         return view;
+    }
+
+    /**
+     * 控件设置监听事件
+     */
+    private void initViewListener() {
+        wait_pay.setOnClickListener(this);
+        wait_send_good.setOnClickListener(this);
+        wait_receive_good.setOnClickListener(this);
+        wait_evaluate.setOnClickListener(this);
+        wait_refund.setOnClickListener(this);
     }
 
     /**
@@ -56,6 +76,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         user_name_tv = (TextView) view.findViewById(R.id.user_name_tv);
         default_uset_image = (ImageView) view.findViewById(R.id.default_uset_image);
 
+
+        //收货信息监听事件
+        wait_pay = (RadioButton) view.findViewById(R.id.wait_pay);
+        wait_send_good = (RadioButton) view.findViewById(R.id.wait_send_good);
+        wait_receive_good = (RadioButton) view.findViewById(R.id.wait_receive_good);
+        wait_evaluate = (RadioButton) view.findViewById(R.id.wait_evaluate);
+        wait_refund = (RadioButton) view.findViewById(R.id.wait_refund);
     }
 
 
@@ -75,6 +102,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             //用户登录按钮
             case R.id.mine_login_tv:
                 intentActivity(Login_Activity.class);
+                break;
+            //待付款
+            case R.id.wait_pay:
+                Intent intent = new Intent(getActivity(), MyOrderActivity.class);
+                getActivity().startActivity(intent);
+                break;
+            //代发货
+            case R.id.wait_send_good:
+
+                break;
+            //待收货
+            case R.id.wait_receive_good:
+
+                break;
+            //带评价
+            case R.id.wait_evaluate:
+
+                break;
+            //待退款
+            case R.id.wait_refund:
+
                 break;
         }
     }

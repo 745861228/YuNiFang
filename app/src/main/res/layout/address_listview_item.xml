@@ -15,16 +15,22 @@
         android:text="姓名"
         android:textColor="#000" />
 
-    <RadioButton
-        android:focusable="false"
-        android:id="@+id/radioButton"
+
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:button="@null"
-        android:drawableRight="@drawable/cart_cb_selector"
-        android:padding="20px" />
+        android:layout_centerVertical="true">
+
+        <CheckBox
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableRight="@drawable/cart_cb_selector"
+            android:focusable="false"
+            android:padding="20px" />
+    </RadioGroup>
 
     <TextView
         android:id="@+id/address"
@@ -35,7 +41,7 @@
         android:layout_below="@+id/name"
         android:padding="20px"
         android:text="详细地址"
-        android:textColor="#000"/>
+        android:textColor="#000" />
 
     <TextView
         android:id="@+id/phone"

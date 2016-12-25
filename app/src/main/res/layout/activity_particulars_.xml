@@ -244,7 +244,7 @@
         android:layout_height="100px"
         android:layout_below="@id/particulas_include"
         android:background="#EEEEEE"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/pro_detail_top_tv"

@@ -12,7 +12,7 @@ public class AddressBean implements Serializable {
     private String userName;
     private String userPhone;
     private String userAddress;
-    private boolean isChecked;
+    private boolean isChecked  =false;
 
 
     public AddressBean( String userAddress, String userName, String userPhone) {

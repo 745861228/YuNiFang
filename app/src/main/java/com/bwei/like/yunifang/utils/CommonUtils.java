@@ -171,7 +171,7 @@ public class CommonUtils {
         if (sharedPreferences == null) {
             sharedPreferences = MyApplication.getContext().getSharedPreferences(SP_NAME, MyApplication.getContext().MODE_PRIVATE);
         }
-        return sharedPreferences.getInt(str, 0);
+        return sharedPreferences.getInt(str, -1);
     }
 
 }
