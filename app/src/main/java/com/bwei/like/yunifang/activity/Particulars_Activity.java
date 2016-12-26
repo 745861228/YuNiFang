@@ -89,8 +89,6 @@ public class Particulars_Activity extends BaseActivity implements View.OnClickLi
     private String[] mTitles = new String[]{"产品详情", "产品参数", "评论"};
     private AutoLinearLayout search1_LinearLayout, search2_LinearLayout;
     private MyScrollView myScrollView;
-    private AutoLinearLayout myAutoLinearLayout;
-    private ListView list;
     private int searchLayoutTop;
     private RecyclerView particulars_recyclerView;
     private TextView pro_details_tv, pro_detail_top_tv, pro_details_top_tv, pro_comment_top_tv;

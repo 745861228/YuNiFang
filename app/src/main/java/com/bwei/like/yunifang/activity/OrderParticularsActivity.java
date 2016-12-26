@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +25,14 @@ import com.bwei.like.yunifang.alipay2.SignUtils;
 import com.bwei.like.yunifang.base.BaseActivity;
 import com.bwei.like.yunifang.bean.AddressBean;
 import com.bwei.like.yunifang.bean.CartDbBean;
+import com.bwei.like.yunifang.bean.OrderStateBean;
 import com.bwei.like.yunifang.dao.AddressDao;
+import com.bwei.like.yunifang.dao.CartDao;
+import com.bwei.like.yunifang.dao.MyOrderDao;
 import com.bwei.like.yunifang.interfaces.OnItemClickSumMoneyListener;
 import com.bwei.like.yunifang.utils.CommonUtils;
 import com.bwei.like.yunifang.view.Home_ListView;
+import com.ta.utdid2.android.utils.SystemUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -71,8 +76,6 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
     private static final int SDK_PAY_FLAG = 1;
 
 
-
-
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -91,16 +94,17 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(OrderParticularsActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < cartDbBeanArrayList.size(); i++) {
+                            myOrderDao.updateGoodsState(cartDbBeanArrayList.get(i).getId(),"待收货");
+                        }
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
                         // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
                             Toast.makeText(OrderParticularsActivity.this, "支付结果确认中", Toast.LENGTH_SHORT).show();
-
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
                             Toast.makeText(OrderParticularsActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
-
                         }
                     }
                     break;
@@ -111,9 +115,8 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
         }
 
     };
-
-
-
+    private MyOrderDao myOrderDao;
+    private CartDao cartDao;
 
 
     @Override
@@ -121,6 +124,9 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_particulars);
         addressDao = new AddressDao(this);
+        myOrderDao = new MyOrderDao(this);
+        cartDao = new CartDao(this);
+
 
         initView();
         initViewListener();
@@ -138,13 +144,13 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
     private void setAddressMonth() {
         int addressId = CommonUtils.getInt("addressId");
         ArrayList<AddressBean> addressBeen = addressDao.selectIdUser(addressId + "");
-        if (addressBeen.size()>0){
+        if (addressBeen.size() > 0) {
             indent_address_tv.setVisibility(View.GONE);
             addressLinearLayout.setVisibility(View.VISIBLE);
             userName_tv.setText(addressBeen.get(0).getUserName());
             userAddress_tv.setText(addressBeen.get(0).getUserAddress());
             userPhone_tv.setText(addressBeen.get(0).getUserPhone());
-        }else {
+        } else {
             indent_address_tv.setVisibility(View.VISIBLE);
             addressLinearLayout.setVisibility(View.GONE);
         }
@@ -168,11 +174,11 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
         for (int i = 0; i < cartDbBeanArrayList.size(); i++) {
             sumMoney += Double.parseDouble(cartDbBeanArrayList.get(i).getShow_price()) * Integer.parseInt(cartDbBeanArrayList.get(i).getNumber());
             sumNumber += Integer.parseInt(cartDbBeanArrayList.get(i).getNumber());
-            goodsName += cartDbBeanArrayList.get(i).getGoods_name()+"";
+            goodsName += cartDbBeanArrayList.get(i).getGoods_name() + "";
         }
         DecimalFormat df = new DecimalFormat("######0.00");
         String format = df.format(sumMoney);
-                                    goodsPrice = format;
+        goodsPrice = format;
         indent_goods_args_tv.setText("共计" + sumNumber + "件商品  " + "总计:￥" + format);
         indent_pay_tv.setText("实付:" + format);
 
@@ -243,11 +249,15 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
             case R.id.pay_button:
                 if (indent_rb_ali.isChecked()) {
                     Toast.makeText(OrderParticularsActivity.this, "您选择支付宝付款", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(OrderParticularsActivity.this, AliPayActivity.class);
-//                    intent.putExtra("sumPayMoney", 0.1);
-//                    startActivity(intent);
+                    //当我点击结算按钮的时候我把对用的数据保存进数据库，默认状态为代付款，同时把购物车数据库中的数据删除
+                    for (int i = 0; i < cartDbBeanArrayList.size(); i++) {
+                        //删除购物车数据
+                        cartDao.deleteGoods(cartDbBeanArrayList.get(i).getId());
+                    }
+                    myOrderDao.addMyOrder(cartDbBeanArrayList,"待付款");
 
                     aliPay();
+
                 } else if (indent_rb_wx.isChecked()) {
                     Toast.makeText(OrderParticularsActivity.this, "该功能尚未完善！", Toast.LENGTH_SHORT).show();
                 } else {
@@ -284,9 +294,7 @@ public class OrderParticularsActivity extends BaseActivity implements View.OnCli
         }
 
 
-       // goodsPrice
-
-        String orderInfo = getOrderInfo(goodsName, "该测试商品的详细描述",goodsPrice );
+        String orderInfo = getOrderInfo(goodsName, "该测试商品的详细描述", goodsPrice);
 
 /**
  * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！

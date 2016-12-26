@@ -111,4 +111,5 @@ public class CartFragment extends BaseFragment implements View.OnClickListener {
 
         }
     }
+
 }

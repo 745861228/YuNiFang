@@ -93,6 +93,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
         switch (v.getId()) {
             //用户设置界面
             case R.id.user_setting:
@@ -105,26 +106,34 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             //待付款
             case R.id.wait_pay:
-                Intent intent = new Intent(getActivity(), MyOrderActivity.class);
+                intent = new Intent(getActivity(), MyOrderActivity.class);
+                intent.putExtra("position", 1);
                 getActivity().startActivity(intent);
                 break;
             //代发货
             case R.id.wait_send_good:
-
+                intent = new Intent(getActivity(), MyOrderActivity.class);
+                intent.putExtra("position", 2);
+                getActivity().startActivity(intent);
                 break;
             //待收货
             case R.id.wait_receive_good:
-
+                intent = new Intent(getActivity(), MyOrderActivity.class);
+                intent.putExtra("position", 3);
+                getActivity().startActivity(intent);
                 break;
             //带评价
             case R.id.wait_evaluate:
-
+                intent = new Intent(getActivity(), MyOrderActivity.class);
+                intent.putExtra("position", 4);
+                getActivity().startActivity(intent);
                 break;
             //待退款
             case R.id.wait_refund:
 
                 break;
         }
+
     }
 
     private void intentActivity(Class c) {
